@@ -1,19 +1,13 @@
-#hormonomicsDB v1.1.0
+#hormonomicsDB v1.2.0
 #January 3rd 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
 #Website: hormonomicsDB.com
-#20210103
+#20210105
 
 library(shiny) #call shiny library in
 library(readxl) #to read csv
-library(data.table) #for using the melt function
-library(DT) #for using some functions in the code
-library(fansi) #don't know why need this package...
-library(gplots)
-library(shinyHeatmaply)
-library(heatmaply)
 
 HORMONOMICSDBV11_both <- read.csv("both.csv") #read in the melted data # before publishing change to "melt_hormcsv_june_4.csv"
 hormcsv_both <- data.frame(HORMONOMICSDBV11_both) #change name and format
@@ -37,6 +31,10 @@ v3_mono <- hormcsv_mono[,3]
 
 PRTs <- read.csv("RTs.csv")
 PRTs <- data.frame(PRTs)
+
+comp.classes <- read.csv("comp_classes.csv")
+comp.classes <- data.frame(comp.classes)
+colnames(comp.classes) <- c("Name", "Class")
 #####
 
 #####
@@ -52,6 +50,13 @@ ui <- fluidPage(
         'HormonomicsDB shell' to upload your own dataset use our platform to perform your
         own custom queries of your untargeted metabolomics data. View your output results in the tab
         next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
+      strong("Database Descriptions: "),
+      p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
+               ESI+ mode.")),
+      p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
+      p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
+      p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
+               in ESI mode.")),
     ),
     mainPanel(
       tabsetPanel(type = "tabs",
@@ -64,10 +69,10 @@ ui <- fluidPage(
                              the search. After this is completed select how you want your data ordered and 
                              view it in the 'Screener Output' tab."),
                            selectInput("dataset", "Choose Dataset:",
-                                        choices = list("PGR Adducts" = 1,
-                                                       "PGR Biotransformations" = 2,
-                                                       "PGR Adducts and Biotransformations" = 3,
-                                                       "PGR Monoisotopic and M+H Only" = 4), 
+                                        choices = list("PGR Monoisotopic and M+H Only" = 1,
+                                                       "PGR Adducts" = 2,
+                                                       "PGR Biotransformations" = 3,
+                                                       "PGR Adducts and Biotransformations" = 4), 
                                         selected = NULL, multiple = FALSE, selectize = TRUE,
                                         width = NULL, size = NULL),
                   numericInput('tol', "Mass tolerance (+/- Da)", 0.02, min = 0, max = 1, step = 0.0001), #tolerance input
@@ -77,9 +82,9 @@ ui <- fluidPage(
                               '.csv'
                             )),
                   radioButtons("orderby", "Order By:",
-                               choices = list("Experimental RT" = 1,
-                                              "Predicted RT" = 2,
-                                              "% RT Match" = 3,
+                               choices = list("% RT Match" = 1,
+                                              "Experimental RT" = 2,
+                                              "Predicted RT" = 3,
                                               "Experimental m/z" = 4),
                                selected = 1),
                   downloadButton("downloadData", "Download Results"),
@@ -145,7 +150,8 @@ server <- function(input, output) {
     custom_RTS = NULL,
     custom.col.names = NULL,
     download.custom.appended = NULL,
-    download.noncustom = NULL
+    download.noncustom = NULL,
+    sample.names = NULL
   ) #assigns empty (initally) variables for things that will be reactive (global) variables
   
   observeEvent(input$file1,{
@@ -153,16 +159,20 @@ server <- function(input, output) {
     rvals$upload <- read.csv(input$file1$datapath, header = TRUE,) #reads in the .csv file and saves to global envrionment, set header = TRUE
     
     uploaded.data <- rvals$upload #takes user uploaded data and converts to local variable
+    header.names <- colnames(uploaded.data)
+    sample.names <- header.names[3:length(header.names)]
+    rvals$sample.names <- sample.names
+    
     rvals$expt.masses <- uploaded.data[,1] #pulls experimental m/z's for use in search function
     
-    if (input$dataset == 4){
+    if (input$dataset == 1){
       data.base <- v3_mono
-    }else if (input$dataset == 3){
-      data.base <- v3_both
     }else if (input$dataset == 2){
-      data.base <- v3_bts
-    }else if (input$dataset == 1){
       data.base <- v3_adducts
+    }else if (input$dataset == 3){
+      data.base <- v3_bts
+    }else if (input$dataset == 4){
+      data.base <- v3_both
     } #loop to take user input and select the database being searched against
     
       marker.vect <- c() #create an empty vector for markers to go into, markers are where in the expt dataset a match occurs
@@ -210,15 +220,19 @@ server <- function(input, output) {
     results.for.download <- cbind(results.for.download, results.for.download.mz.rt) #put the concat mz_rt into the data
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
                                         "RT", "Predicted RT", "Percent Match RT", "mzrt")
+    results.for.download <- merge(x = results.for.download, y = comp.classes,
+                        by.x = "Compound Name", by.y = "Name", all.x = TRUE) #merges the query results to predicted RTs
+    colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
+                                        "Experimental RT", "Predicted RT", "Percent Match RT", "mzrt", "Class")
 
     if (input$orderby == 1){
-      results.for.download.sort <- results.for.download[order(results.for.download[,5]),]
+      results.for.display <- results.for.download[order(-results.for.download[,7]),]
     }else if (input$orderby == 2){
-      results.for.download.sort <- results.for.download[order(results.for.download[,6]),]
+      results.for.display <- results.for.download[order(results.for.download[,5]),]
     }else if (input$orderby == 3){
-      results.for.download.sort <- results.for.download[order(-results.for.download[,7]),]
+      results.for.display <- results.for.download[order(results.for.download[,6]),]
     }else if (input$orderby == 4){
-      results.for.download.sort <- results.for.download[order(results.for.download[,4]),]
+      results.for.display <- results.for.download[order(results.for.download[,4]),]
     } #loop to take UI input and sort the output data in the UI 
     
     experimental.intensities <- rvals$results_appended #takes experimental intensities and makes a local variable
@@ -227,12 +241,24 @@ server <- function(input, output) {
     experimental.intensities <- unique(experimental.intensities) #drops duplicates (this is fine because isobars exist in rvals$results_appended)
     colnames(experimental.intensities) <- c("mzrt1") #change first column name to mzrt1
     
-    download.results <- merge(x = results.for.download, y = experimental.intensities, by.x = "mzrt", by.y = "mzrt1", all.x = TRUE) #pseudo-SQL left join
+    download.results <- merge(x = results.for.download, y = comp.classes,
+                              by.x = "Compound Name", by.y = "Name", all.x = TRUE) #pesudo-SQL left join for class in download file
+    download.results <- merge(x = results.for.download, y = experimental.intensities,
+                              by.x = "mzrt", by.y = "mzrt1", all.x = TRUE) #pseudo-SQL left join
+    download.results <- as.matrix(download.results) #converts to matrix (to drop header)
+    download.results <- matrix(download.results, ncol = ncol(download.results), dimnames = NULL) #drops header
+    download.results <- data.frame(download.results) #convert back to dataframe (header = FALSE)
+    sample.names <- rvals$sample.names #bring sample names back into local envrionment
+    colnames(download.results) <- c("mz_rt", "Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
+                                    "RT", "Predicted RT", "Percent Match RT", "Class", sample.names) #column names
+    download.results <- download.results[,c(1,2,9,3,4,5,6,7,8,10:ncol(download.results))] #rearranges to bring compound class in
+    download.results <- download.results[,2:ncol(download.results)] #drops mz_rt
     download.results <- data.frame(download.results) #convert this data to data.frame so it can be downloaded by the user
 
     rvals$download.noncustom <- download.results #assign the data for download to a global variable so it can be downloaded within the GUI envrionment by the user
-
-    results.for.download.sort[,1:7] #displays the results we want in the GUI
+    
+    results.for.display <- results.for.display[, c(1, 9, 2, 3, 4, 5, 6, 7, 8)] #reorders to bring class into the mix
+    results.for.display[,1:8] #displays the results we want in the GUI
     
   },
   digits = 4 #displays 4 decimal points
@@ -333,13 +359,15 @@ server <- function(input, output) {
     } #logic to order results output to GUI based on users input (order by)
     
     custom.experimental.intensities <- rvals$custom.results.appended #takes intensities and brings into local envrionment
-    custom.experimental.intensities.mzrt <- paste0(custom.experimental.intensities[,4], "_", custom.experimental.intensities[,5]) #creates mz_rt for each hit 
+    custom.experimental.intensities.mzrt <- paste0(custom.experimental.intensities[,4],
+                                                   "_", custom.experimental.intensities[,5]) #creates mz_rt for each hit 
     custom.experimental.intensities <- cbind(custom.experimental.intensities.mzrt,
                                              custom.experimental.intensities[,6:ncol(custom.experimental.intensities)]) #binds back together
     custom.experimental.intensities <- unique(custom.experimental.intensities) #removes duplicates 
     colnames(custom.experimental.intensities) <- c("mzrt1") #renaming the mz_rt column
 
-    custom.download.results <- merge(x = custom.results.for.download, y = custom.experimental.intensities, by.x = "mzrt", by.y = "mzrt1", all.x = TRUE) #inner join
+    custom.download.results <- merge(x = custom.results.for.download, y = custom.experimental.intensities,
+                                     by.x = "mzrt", by.y = "mzrt1", all.x = TRUE) #inner join
     custom.download.results <- data.frame(custom.download.results) #df for downloading
     rvals$download.custom.appended <- custom.download.results #send to global envrionment so it can be downloaded from GUI
     
