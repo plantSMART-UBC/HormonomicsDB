@@ -39,7 +39,7 @@ Strictosidine | M+H | 368.1663 | 5.86
 * Experimental metabolomics data is still formatted the same for the Shell.
 
 ## Terms and Agreements
-* HormonomicsDB was developed for research use only and is not intended for use in diagnostic work. Dispite diligent validation and bug fixing, we are not responsible for any mistakes the application makes in data processing. Considering this, please inform us immdiatley of any bugs that you encounter. 
+* HormonomicsDB was developed for research use only and is not intended for use in diagnostic work. Dispite diligent validation and bug fixing, we are not responsible for any mistakes the application makes in data processing. Considering this, please inform us immediately of any bugs that you encounter. 
 
 * We do not save any data that is uploaded to the server, it is immediatley deleted with every new session that you start.
 
