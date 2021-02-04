@@ -24,10 +24,10 @@ updateR()
 ## Formatting Data:
 * To use the main HormonomicsDB tool, data should be formatted like this:
 
-RT | m/z | Sample_1 | Sample_2 | Sample_3 
+m/z | RT | Sample_1 | Sample_2 | Sample_3 
 --- | --- | --- | --- | --- |
-1.11 | 233.1 | 0 | 123.1 | 441.2
-1.23 | 160.1 | 23441.2 | 222 | 0
+233.1 | 2.1 | 0 | 123.1 | 441.2
+123.9 | 16.1 | 23441.2 | 222 | 0
 
 * To format a custom database for the Shell, your data should like this in a .csv file.
 
