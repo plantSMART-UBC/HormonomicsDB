@@ -7,7 +7,7 @@
 #20210105
 
 library(shiny) #call shiny library in
-library(readxl) #to read csv
+#library(readxl) #to read csv
 
 HORMONOMICSDBV11_both <- read.csv("both.csv") #read in the melted data # before publishing change to "melt_hormcsv_june_4.csv"
 hormcsv_both <- data.frame(HORMONOMICSDBV11_both) #change name and format
