@@ -1,10 +1,10 @@
 #hormonomicsDB v1.2.0
-#January 3rd 2021
+#February 22nd 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
 #Website: hormonomicsDB.com
-#20210105
+#20210222
 
 library(shiny) #call shiny library in
 #library(readxl) #to read csv
@@ -132,7 +132,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
     
-  options(shiny.maxRequestSize=10*1024^2) #increase max upload size to 30MB
+  options(shiny.maxRequestSize=10*1024^2) #increase max upload size to 10MB
   
   rvals <- reactiveValues(
     upload = NULL,
