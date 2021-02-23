@@ -131,6 +131,8 @@ ui <- fluidPage(
 #####
 
 server <- function(input, output) {
+    
+  options(shiny.maxRequestSize=30*1024^2) #increase max upload size to 30MB
   
   rvals <- reactiveValues(
     upload = NULL,
