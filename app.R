@@ -1,10 +1,9 @@
 #hormonomicsDB v1.3.0
-#February 22nd 2021
+#March 8th 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
 #Website: hormonomicsDB.com
-#20210222
 
 library(shiny) #call shiny library in
 #library(readxl) #to read csv
