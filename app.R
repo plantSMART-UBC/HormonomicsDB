@@ -46,24 +46,25 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       strong("Instructions: "),
-      p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
-        'HormonomicsDB shell' to upload your own dataset use our platform to perform your
-        own custom queries of your untargeted metabolomics data. View your output results in the tab
-        next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
-      strong("Database Descriptions: "),
-      p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
-               ESI+ mode.")),
-      p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
-      p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
-      p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
-               in ESI mode.")),
     ),
     mainPanel(
       tabsetPanel(type = "tabs",
                   
+                  
                   tabPanel("Instructions",
                            br(),
-                           strong("Instructions")),
+                           strong("Instructions"),
+                           p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
+        'HormonomicsDB shell' to upload your own dataset use our platform to perform your
+        own custom queries of your untargeted metabolomics data. View your output results in the tab
+        next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
+                           strong("Database Descriptions: "),
+                           p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
+               ESI+ mode.")),
+                           p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
+                           p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
+                           p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
+               in ESI mode.")),),
                   
                   tabPanel("M/Z Screener",
                            br(),
