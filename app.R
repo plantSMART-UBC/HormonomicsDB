@@ -61,6 +61,10 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(type = "tabs",
                   
+                  tabPanel("Instructions",
+                           br(),
+                           strong("Instructions")),
+                  
                   tabPanel("M/Z Screener",
                            br(),
                            strong("Instructions: "),
