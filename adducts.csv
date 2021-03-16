@@ -4,6 +4,19 @@ Abscisic acd,Monoisotopic,264.136159
 dihydrophaseic acid,Monoisotopic,282.146724
 neophaseic acid,Monoisotopic,279.123249
 phaseic acid,Monoisotopic,280.131074
+Mitragynine,Monoisotopic,398.220557
+Secologanin,Monoisotopic,388.13695
+Strictosidine,Monoisotopic,530.22643
+camptothecin,Monoisotopic,348.11101
+Reserpine,Monoisotopic,608.27338
+Lysergic Acid,Monoisotopic,268.12118
+Ibogaine,Monoisotopic,312.22016
+Ibogamine,Monoisotopic,280.19395
+Voacangine,Monoisotopic,368.20999
+Catharanthine,Monoisotopic,336.18378
+Yohimbine,Monoisotopic,354.19434
+"N,N-Dimethyltryptamine",Monoisotopic,188.13135
+Strictosamide,Monoisotopic,498.20022
 2-oxo-indole-3-acetic acid,Monoisotopic,191.18336
 anthranilic acid,Monoisotopic,137.047678
 IAA alanine,Monoisotopic,246.100442
@@ -240,6 +253,19 @@ Abscisic acd,M.plus.H,265.143984
 dihydrophaseic acid,M.plus.H,283.154549
 neophaseic acid,M.plus.H,280.131074
 phaseic acid,M.plus.H,281.138899
+Mitragynine,M.plus.H,399.228382
+Secologanin,M.plus.H,389.144775
+Strictosidine,M.plus.H,531.234255
+camptothecin,M.plus.H,349.118835
+Reserpine,M.plus.H,609.281205
+Lysergic Acid,M.plus.H,269.129005
+Ibogaine,M.plus.H,313.227985
+Ibogamine,M.plus.H,281.201775
+Voacangine,M.plus.H,369.217815
+Catharanthine,M.plus.H,337.191605
+Yohimbine,M.plus.H,355.202165
+"N,N-Dimethyltryptamine",M.plus.H,189.139175
+Strictosamide,M.plus.H,499.208045
 2-oxo-indole-3-acetic acid,M.plus.H,192.191185
 anthranilic acid,M.plus.H,138.055503
 IAA alanine,M.plus.H,247.108267
@@ -476,6 +502,19 @@ Abscisic acd,M.plus.H.less.2H2O,229.122854
 dihydrophaseic acid,M.plus.H.less.2H2O,247.133419
 neophaseic acid,M.plus.H.less.2H2O,244.109944
 phaseic acid,M.plus.H.less.2H2O,245.117769
+Mitragynine,M.plus.H.less.2H2O,363.207252
+Secologanin,M.plus.H.less.2H2O,353.123645
+Strictosidine,M.plus.H.less.2H2O,495.213125
+camptothecin,M.plus.H.less.2H2O,313.097705
+Reserpine,M.plus.H.less.2H2O,573.260075
+Lysergic Acid,M.plus.H.less.2H2O,233.107875
+Ibogaine,M.plus.H.less.2H2O,277.206855
+Ibogamine,M.plus.H.less.2H2O,245.180645
+Voacangine,M.plus.H.less.2H2O,333.196685
+Catharanthine,M.plus.H.less.2H2O,301.170475
+Yohimbine,M.plus.H.less.2H2O,319.181035
+"N,N-Dimethyltryptamine",M.plus.H.less.2H2O,153.118045
+Strictosamide,M.plus.H.less.2H2O,463.186915
 2-oxo-indole-3-acetic acid,M.plus.H.less.2H2O,156.170055
 anthranilic acid,M.plus.H.less.2H2O,102.034373
 IAA alanine,M.plus.H.less.2H2O,211.087137
@@ -712,6 +751,19 @@ Abscisic acd,M.plus.H.less.H2O,247.133419
 dihydrophaseic acid,M.plus.H.less.H2O,265.143984
 neophaseic acid,M.plus.H.less.H2O,262.120509
 phaseic acid,M.plus.H.less.H2O,263.128334
+Mitragynine,M.plus.H.less.H2O,381.217817
+Secologanin,M.plus.H.less.H2O,371.13421
+Strictosidine,M.plus.H.less.H2O,513.22369
+camptothecin,M.plus.H.less.H2O,331.10827
+Reserpine,M.plus.H.less.H2O,591.27064
+Lysergic Acid,M.plus.H.less.H2O,251.11844
+Ibogaine,M.plus.H.less.H2O,295.21742
+Ibogamine,M.plus.H.less.H2O,263.19121
+Voacangine,M.plus.H.less.H2O,351.20725
+Catharanthine,M.plus.H.less.H2O,319.18104
+Yohimbine,M.plus.H.less.H2O,337.1916
+"N,N-Dimethyltryptamine",M.plus.H.less.H2O,171.12861
+Strictosamide,M.plus.H.less.H2O,481.19748
 2-oxo-indole-3-acetic acid,M.plus.H.less.H2O,174.18062
 anthranilic acid,M.plus.H.less.H2O,120.044938
 IAA alanine,M.plus.H.less.H2O,229.097702
@@ -948,6 +1000,19 @@ Abscisic acd,M.plus.NH4.less.H2O,264.159968
 dihydrophaseic acid,M.plus.NH4.less.H2O,282.170533
 neophaseic acid,M.plus.NH4.less.H2O,279.147058
 phaseic acid,M.plus.NH4.less.H2O,280.154883
+Mitragynine,M.plus.NH4.less.H2O,398.244366
+Secologanin,M.plus.NH4.less.H2O,388.160759
+Strictosidine,M.plus.NH4.less.H2O,530.250239
+camptothecin,M.plus.NH4.less.H2O,348.134819
+Reserpine,M.plus.NH4.less.H2O,608.297189
+Lysergic Acid,M.plus.NH4.less.H2O,268.144989
+Ibogaine,M.plus.NH4.less.H2O,312.243969
+Ibogamine,M.plus.NH4.less.H2O,280.217759
+Voacangine,M.plus.NH4.less.H2O,368.233799
+Catharanthine,M.plus.NH4.less.H2O,336.207589
+Yohimbine,M.plus.NH4.less.H2O,354.218149
+"N,N-Dimethyltryptamine",M.plus.NH4.less.H2O,188.155159
+Strictosamide,M.plus.NH4.less.H2O,498.224029
 2-oxo-indole-3-acetic acid,M.plus.NH4.less.H2O,191.207169
 anthranilic acid,M.plus.NH4.less.H2O,137.071487
 IAA alanine,M.plus.NH4.less.H2O,246.124251
@@ -1184,6 +1249,19 @@ Abscisic acd,M.plus.Li,270.151281
 dihydrophaseic acid,M.plus.Li,288.161846
 neophaseic acid,M.plus.Li,285.138371
 phaseic acid,M.plus.Li,286.146196
+Mitragynine,M.plus.Li,404.235679
+Secologanin,M.plus.Li,394.152072
+Strictosidine,M.plus.Li,536.241552
+camptothecin,M.plus.Li,354.126132
+Reserpine,M.plus.Li,614.288502
+Lysergic Acid,M.plus.Li,274.136302
+Ibogaine,M.plus.Li,318.235282
+Ibogamine,M.plus.Li,286.209072
+Voacangine,M.plus.Li,374.225112
+Catharanthine,M.plus.Li,342.198902
+Yohimbine,M.plus.Li,360.209462
+"N,N-Dimethyltryptamine",M.plus.Li,194.146472
+Strictosamide,M.plus.Li,504.215342
 2-oxo-indole-3-acetic acid,M.plus.Li,197.198482
 anthranilic acid,M.plus.Li,143.0628
 IAA alanine,M.plus.Li,252.115564
@@ -1420,6 +1498,19 @@ Abscisic acd,M.plus.Na,287.12593
 dihydrophaseic acid,M.plus.Na,305.136495
 neophaseic acid,M.plus.Na,302.11302
 phaseic acid,M.plus.Na,303.120845
+Mitragynine,M.plus.Na,421.210328
+Secologanin,M.plus.Na,411.126721
+Strictosidine,M.plus.Na,553.216201
+camptothecin,M.plus.Na,371.100781
+Reserpine,M.plus.Na,631.263151
+Lysergic Acid,M.plus.Na,291.110951
+Ibogaine,M.plus.Na,335.209931
+Ibogamine,M.plus.Na,303.183721
+Voacangine,M.plus.Na,391.199761
+Catharanthine,M.plus.Na,359.173551
+Yohimbine,M.plus.Na,377.184111
+"N,N-Dimethyltryptamine",M.plus.Na,211.121121
+Strictosamide,M.plus.Na,521.189991
 2-oxo-indole-3-acetic acid,M.plus.Na,214.173131
 anthranilic acid,M.plus.Na,160.037449
 IAA alanine,M.plus.Na,269.090213

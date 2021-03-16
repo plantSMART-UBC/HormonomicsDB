@@ -1,9 +1,10 @@
-#hormonomicsDB v1.3.0
-#March 8th 2021
+#hormonomicsDB v1.2.0
+#January 3rd 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
 #Website: hormonomicsDB.com
+#20210105
 
 library(shiny) #call shiny library in
 #library(readxl) #to read csv
@@ -40,58 +41,25 @@ colnames(comp.classes) <- c("Name", "Class")
 
 ui <- fluidPage(
   
-  titlePanel("HormonomicsDB"),
+  titlePanel("HormonomicsDB (v1.3)"),
   
   sidebarLayout(
     sidebarPanel(
-      strong("Welcome to HormonomicsDB v1.3.1"),
-      br(),
-      p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
-      p("PlantSMART @ UBC Okanagan"),
-      p("Please see the instructions tab for information about the tool and how to format your data")
-    ),
-    
-    mainPanel(
-      tabsetPanel(type = "tabs",
-                  
-                  tabPanel("Instructions",
-                           br(),
-                           strong("Instructions and Data Formatting"),
-                           strong("Instructions: "),
-                           p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
+      strong("Instructions: "),
+      p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
         'HormonomicsDB shell' to upload your own dataset use our platform to perform your
         own custom queries of your untargeted metabolomics data. View your output results in the tab
         next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
-                           br(),
-                           strong("Database Descriptions: "),
-                           p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
+      strong("Database Descriptions: "),
+      p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
                ESI+ mode.")),
-                           p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
-                           p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
-                           p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
+      p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
+      p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
+      p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
                in ESI mode.")),
-                           p("Max file upload size is 10 MB"),
-                           br(),
-                           strong("Input Data Formatting: "),
-                           br(),
-                           tableOutput('input_data_table'),
-                           br(),
-                           strong("Shell Database Formatting: "),
-                           br(),
-                           tableOutput('shell_data_table'),
-                           br(),
-                           strong("Code availability: "),
-                           p("All source code is available at https://github.com/plantSMART-UBC/HormonomicsDB"),
-                           br(),
-                           strong("Terms and Agreements: "),
-                           p("HormonomicsDB was developed for research use only and is not
-                             intended for use in diagnostic work. Dispite diligent validation and
-                             bug fixing, we are not responsible for any mistakes the application makes in
-                             data processing. Considering this, please inform us immediately of any bugs that you encounter."),
-                           p("We do not save any user data that is uploaded to the server, it is immediatley deleted
-                             with every new session that is started."),
-                           p("Please acknowledge the aforementiones authors in any work where HormonomicsDB has been used."),
-                           ),
+    ),
+    mainPanel(
+      tabsetPanel(type = "tabs",
                   
                   tabPanel("M/Z Screener",
                            br(),
@@ -163,27 +131,8 @@ ui <- fluidPage(
 #####
 
 server <- function(input, output) {
-  
-  ##code below is for the input data table in instructions
-  m_z_col_ex <- c(233.1, 129.9)
-  rt_col_ex <- c(2.1, 16.1)
-  samp_1_ex <- c(0, 23441.2)
-  samp_2_ex <- c(123.1, 222.0)
-  samp_3_ex <- c(441.2, 0)
-  input_data_table <- data.frame(m_z_col_ex, rt_col_ex, samp_1_ex, samp_2_ex, samp_3_ex)
-  colnames(input_data_table) <- c("m/z", "RT", "Sample_1", "Sample_2", "Sample_3")
-  output$input_data_table <- renderTable(input_data_table)
-  
-  ##code below is for the shell database input format
-  compound_name <- c("compound_1", "compound_2", "compound_3")
-  adduct_names <- c("M+H", "M+H", "M+H")
-  mass_ex <- c(214.1242, 317.2136, 368.1663)
-  rtp_ex <- c(2.52, 5.86, 6.11)
-  shell_data_table <- data.frame(compound_name, adduct_names, mass_ex, rtp_ex)
-  colnames(shell_data_table) <- c("Compound_Name", "Adduct", "m/z", "RTP")
-  output$shell_data_table <- renderTable(shell_data_table)
-    
-  options(shiny.maxRequestSize=10*1024^2) #increase max upload size to 10MB
+
+  options(shiny.maxRequestSize = 10*1024^2) #increase max upload size to 10Mb
   
   rvals <- reactiveValues(
     upload = NULL,
