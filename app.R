@@ -40,25 +40,50 @@ colnames(comp.classes) <- c("Name", "Class")
 
 ui <- fluidPage(
   
-  titlePanel("HormonomicsDB (v1.3)"),
+  titlePanel("HormonomicsDB"),
   
   sidebarLayout(
     sidebarPanel(
-      strong("Instructions: "),
-      p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
-        'HormonomicsDB shell' to upload your own dataset use our platform to perform your
-        own custom queries of your untargeted metabolomics data. View your output results in the tab
-        next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
-      strong("Database Descriptions: "),
-      p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
-               ESI+ mode.")),
-      p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
-      p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
-      p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
-               in ESI mode.")),
+      strong("HormonomicsDB v1.3.1"),
+      br(),
+      p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
+      p("The University of British Columbia"),
+      p("Contact: susan.murch@ubc.ca"),
+      p("HormonomicsDB is a tool developed at UBC Okanagan by the plantSMART
+        research team to allow users to process their untargeted metabolomics
+        data to putativley identify plant hormones."),
     ),
     mainPanel(
       tabsetPanel(type = "tabs",
+                  
+                  
+                  tabPanel("Instructions",
+                           br(),
+                           strong("Instructions"),
+                           p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
+        'HormonomicsDB shell' to upload your own dataset use our platform to perform your
+        own custom queries of your untargeted metabolomics data. View your output results in the tab
+        next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
+                           br(),
+                           strong("Database Descriptions: "),
+                           p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
+               ESI+ mode.")),
+                           p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
+                           p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
+                           p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
+               in ESI mode.")),
+                           br(),
+                           strong("Code Availability"),
+                           p("All source code and files are available at https://github.com/plantSMART-UBC/HormonomicsDB"),
+                           br(),
+                           strong("Terms and Agreements"),
+                           p("HormonomicsDB was developed for research use only and is not intended for use in diagnostic work.
+                             Dispite diligent validation and bug fixing, we are not responsible for any mistakes the application
+                             makes in data processing. Considering this, please inform us immediately of any bugs that you encounter."),
+                           p("We do not save any data that is uploaded to the server, it is
+                             immediatley deleted with every new session that you start."),
+                           p("Please acknowledge the aforementioned authors in any work where HormonomicsDB has been used."),
+                           ),
                   
                   tabPanel("M/Z Screener",
                            br(),
