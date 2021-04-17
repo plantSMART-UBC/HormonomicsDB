@@ -185,19 +185,30 @@ server <- function(input, output) {
     rvals$upload <- read.csv(input$file1$datapath, header = TRUE,) #reads in the .csv file and saves to global envrionment, set header = TRUE
     
     uploaded.data <- rvals$upload #takes user uploaded data and converts to local variable
-    header.names <- colnames(uploaded.data)
+    header.names <- colnames(uploaded.data) #saves the header names
+    
+    if (length(header.names > 2)) {
     sample.names <- header.names[3:length(header.names)]
+    #saves sample names from 3rd index
+    }
+    else {
+      sample.names <- c("N/A")
+    }
+    
     rvals$sample.names <- sample.names
     
     rvals$expt.masses <- uploaded.data[,1] #pulls experimental m/z's for use in search function
     
     if (input$dataset == 1){
       data.base <- v3_mono
-    }else if (input$dataset == 2){
+    }
+    else if (input$dataset == 2){
       data.base <- v3_adducts
-    }else if (input$dataset == 3){
+    }
+    else if (input$dataset == 3){
       data.base <- v3_bts
-    }else if (input$dataset == 4){
+    }
+    else if (input$dataset == 4){
       data.base <- v3_both
     } #loop to take user input and select the database being searched against
     
@@ -223,6 +234,7 @@ server <- function(input, output) {
       colnames(results) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT")
       print_results <- results[,1:5]
       rvals$results <- print_results
+      ##if ()
       rvals$results_appended <- results
 
   })
@@ -253,11 +265,14 @@ server <- function(input, output) {
 
     if (input$orderby == 1){
       results.for.display <- results.for.download[order(-results.for.download[,7]),]
-    }else if (input$orderby == 2){
+    }
+    else if (input$orderby == 2){
       results.for.display <- results.for.download[order(results.for.download[,5]),]
-    }else if (input$orderby == 3){
+    }
+    else if (input$orderby == 3){
       results.for.display <- results.for.download[order(results.for.download[,6]),]
-    }else if (input$orderby == 4){
+    }
+    else if (input$orderby == 4){
       results.for.display <- results.for.download[order(results.for.download[,4]),]
     } #loop to take UI input and sort the output data in the UI 
     

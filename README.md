@@ -5,7 +5,7 @@
 HormonomicsDB is a tool developed at UBC Okanagan by the plantSMART research team to allow users to process their
  untargeted metabolomics data to putativley identify plant hormones.
 
-## Current Features (v1.3)
+## Current Features (v1.3.1)
 * About 250 Plant Hormones
 * The HormonomicsDB shell to allow users to use their own dataset.
 
