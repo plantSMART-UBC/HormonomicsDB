@@ -1,32 +1,36 @@
-#hormonomicsDB v1.3.1
-#March 15th, 2021
+#hormonomicsDB v1.3.2
+#April 16th 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
 #Website: hormonomicsDB.com
 
 library(shiny) #call shiny library in
-#library(readxl) #to read csv
 
 HORMONOMICSDBV11_both <- read.csv("both.csv") #read in the melted data # before publishing change to "melt_hormcsv_june_4.csv"
 hormcsv_both <- data.frame(HORMONOMICSDBV11_both) #change name and format
 colnames(hormcsv_both) <- c("Names", "Adduct", "mz") #gives all the column names the same names
 v3_both <- hormcsv_both[,3]
 
-HORMONOMICSDBV11_adducts <- read.csv("adducts.csv") #read in the melted data # before publishing change to "melt_hormcsv_june_4.csv"
+HORMONOMICSDBV11_adducts <- read.csv("adducts.csv") #read in the melted data 
 hormcsv_adducts <- data.frame(HORMONOMICSDBV11_adducts) #change name and format
 colnames(hormcsv_adducts) <- c("Names", "Adduct", "mz") #gives all the column names the same names
 v3_adducts <- hormcsv_adducts[,3]
 
-HORMONOMICSDBV11_bts <- read.csv("bts_good.csv") #read in the melted data # before publishing change to "melt_hormcsv_june_4.csv"
+HORMONOMICSDBV11_bts <- read.csv("biotransformations.csv") #read in the melted data 
 hormcsv_bts <- data.frame(HORMONOMICSDBV11_bts) #change name and format
 colnames(hormcsv_bts) <- c("Names", "Adduct", "mz") #gives all the column names the same names
 v3_bts <- hormcsv_bts[,3]
 
-HORMONOMICSDBV11_mono <- read.csv("monoisotopic_mh.csv") #read in the melted data # before publishing change to "melt_hormcsv_june_4.csv"
-hormcsv_mono <- data.frame(HORMONOMICSDBV11_mono) #change name and format
-colnames(hormcsv_mono) <- c("Names", "Adduct", "mz") #gives all the column names the same names
-v3_mono <- hormcsv_mono[,3]
+HORMONOMICSDBV11_MH <- read.csv("M_plus_H_adduct.csv") #read in the melted data 
+hormcsv_MH <- data.frame(HORMONOMICSDBV11_MH) #change name and format
+colnames(hormcsv_MH) <- c("Names", "Adduct", "mz") #gives all the column names the same names
+v3_MH <- hormcsv_MH[,3]
+
+HORMONOMICSDBV11_monoiso <- read.csv("monoisotopic.csv") #read in the melted data 
+hormcsv_monoiso <- data.frame(HORMONOMICSDBV11_monoiso) #change name and format
+colnames(hormcsv_monoiso) <- c("Names", "Adduct", "mz") #gives all the column names the same names
+v3_monoiso <- hormcsv_monoiso[,3]
 
 PRTs <- read.csv("RTs.csv")
 PRTs <- data.frame(PRTs)
@@ -44,7 +48,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      strong("HormonomicsDB v1.3.1"),
+      strong("HormonomicsDB v1.3.2"),
       br(),
       p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
       p("The University of British Columbia"),
@@ -93,10 +97,11 @@ ui <- fluidPage(
                              the search. After this is completed select how you want your data ordered and 
                              view it in the 'Screener Output' tab."),
                            selectInput("dataset", "Choose Dataset:",
-                                        choices = list("PGR Monoisotopic and M+H Only" = 1,
-                                                       "PGR Adducts" = 2,
-                                                       "PGR Biotransformations" = 3,
-                                                       "PGR Adducts and Biotransformations" = 4), 
+                                        choices = list("PGR Monoisotopic" = 1,
+                                                       "PGR M+H" = 2,
+                                                       "PGR Adducts" = 3,
+                                                       "PGR Biotransformations" = 4,
+                                                       "PGR Adducts and Biotransformations" = 5), 
                                         selected = NULL, multiple = FALSE, selectize = TRUE,
                                         width = NULL, size = NULL),
                   numericInput('tol', "Mass tolerance (+/- Da)", 0.02, min = 0, max = 1, step = 0.0001), #tolerance input
@@ -156,7 +161,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
-  options(shiny.maxRequestSize = 10*1024^2) #increase max upload size to 10Mb
+  options(shiny.maxRequestSize = 10*1024^2) #set max upload size to 10 Mb to prevent crashing.
   
   rvals <- reactiveValues(
     upload = NULL,
@@ -178,7 +183,7 @@ server <- function(input, output) {
     download.custom.appended = NULL,
     download.noncustom = NULL,
     sample.names = NULL
-  ) #assigns empty (initally) variables for things that will be reactive (global) variables
+  ) #initalizes reactive (public) variables
   
   observeEvent(input$file1,{
     req(input$file1)
@@ -200,15 +205,23 @@ server <- function(input, output) {
     rvals$expt.masses <- uploaded.data[,1] #pulls experimental m/z's for use in search function
     
     if (input$dataset == 1){
-      data.base <- v3_mono
+      data.base.full <- hormcsv_monoiso
+      data.base <- v3_monoiso
     }
     else if (input$dataset == 2){
-      data.base <- v3_adducts
+      data.base.full <- hormcsv_MH
+      data.base <- v3_MH
     }
     else if (input$dataset == 3){
-      data.base <- v3_bts
+      data.base.full <- hormcsv_adducts
+      data.base <- v3_adducts
     }
     else if (input$dataset == 4){
+      data.base.full <- hormcsv_bts
+      data.base <- v3_bts
+    }
+    else if (input$dataset == 5){
+      data.base.full <- hormcsv_both
       data.base <- v3_both
     } #loop to take user input and select the database being searched against
     
@@ -228,7 +241,7 @@ server <- function(input, output) {
         }
       }
       location.db <- as.vector(unlist(marker.vect)) # gives the matches from the data base as a vector
-      database.hits <- hormcsv_adducts[location.db,] # prints out everything from db where there is a match
+      database.hits <- data.base.full[location.db,] # prints out everything from db where there is a match
       position.experimental <- unlist(exp.match) # gives the postion of experimental hits from uploaded data
       results <- cbind(database.hits, rvals$upload[position.experimental,])
       colnames(results) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT")
