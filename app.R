@@ -63,12 +63,14 @@ ui <- fluidPage(
                   
                   tabPanel("Instructions",
                            br(),
+                           
                            strong("Instructions"),
                            p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
         'HormonomicsDB shell' to upload your own dataset use our platform to perform your
         own custom queries of your untargeted metabolomics data. View your output results in the tab
         next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
                            br(),
+                           
                            strong("Database Descriptions: "),
                            p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
                ESI+ mode.")),
@@ -77,6 +79,7 @@ ui <- fluidPage(
                            p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
                in ESI mode.")),
                            br(),
+                           
                            strong("Code Availability"),
                            p("All source code and files are available at https://github.com/plantSMART-UBC/HormonomicsDB"),
                            br(),
@@ -90,20 +93,32 @@ ui <- fluidPage(
                            ),
                   
                   tabPanel("M/Z Screener",
+                           
                            br(),
+                           
                            strong("Instructions: "),
-                           p("Select one of our datasets to search from then select a search tolerance
+                           p("Select which datasets to search from then select a search tolerance
                              and then upload your formatted data as a .csv and allow up to 3 minutes to perform
                              the search. After this is completed select how you want your data ordered and 
                              view it in the 'Screener Output' tab."),
-                           selectInput("dataset", "Choose Dataset:",
-                                        choices = list("PGR Monoisotopic" = 1,
-                                                       "PGR M+H" = 2,
-                                                       "PGR Adducts" = 3,
-                                                       "PGR Biotransformations" = 4,
-                                                       "PGR Adducts and Biotransformations" = 5), 
-                                        selected = NULL, multiple = FALSE, selectize = TRUE,
-                                        width = NULL, size = NULL),
+
+                           checkboxGroupInput("dataset", "Choose Dataset: ", 
+                                              choices = list("PGR Monoisotopic" = 1,
+                                                             "PGR M+H" = 2,
+                                                             "PGR Adducts" = 3,
+                                                             "PGR Biotransformations" = 4),
+                                              selected = 1),
+                           
+                           ##old dropdown boxes for dataset selection (remove before final commit)
+                           # selectInput("dataset", "Choose Dataset:",
+                           #              choices = list("PGR Monoisotopic" = 1,
+                           #                             "PGR M+H" = 2,
+                           #                             "PGR Adducts" = 3,
+                           #                             "PGR Biotransformations" = 4,
+                           #                             "PGR Adducts and Biotransformations" = 5), 
+                           #              selected = NULL, multiple = FALSE, selectize = TRUE,
+                           #              width = NULL, size = NULL),
+                           
                   numericInput('tol', "Mass tolerance (+/- Da)", 0.02, min = 0, max = 1, step = 0.0001), #tolerance input
                   fileInput('file1', 'Choose file to upload: ', #import csv button
                             accept = c(
@@ -182,7 +197,8 @@ server <- function(input, output) {
     custom.col.names = NULL,
     download.custom.appended = NULL,
     download.noncustom = NULL,
-    sample.names = NULL
+    sample.names = NULL,
+    input_vector = NULL
   ) #initalizes reactive (public) variables
   
   observeEvent(input$file1,{
@@ -204,26 +220,29 @@ server <- function(input, output) {
     
     rvals$expt.masses <- uploaded.data[,1] #pulls experimental m/z's for use in search function
     
-    if (input$dataset == 1){
-      data.base.full <- hormcsv_monoiso
-      data.base <- v3_monoiso
-    }
-    else if (input$dataset == 2){
-      data.base.full <- hormcsv_MH
-      data.base <- v3_MH
-    }
-    else if (input$dataset == 3){
-      data.base.full <- hormcsv_adducts
-      data.base <- v3_adducts
-    }
-    else if (input$dataset == 4){
-      data.base.full <- hormcsv_bts
-      data.base <- v3_bts
-    }
-    else if (input$dataset == 5){
-      data.base.full <- hormcsv_both
-      data.base <- v3_both
-    } #loop to take user input and select the database being searched against
+    #dataset selection algorithm
+    
+    ##old code from dropdown menu (remove before final commit)
+    # if (input$dataset == 1){
+    #   data.base.full <- hormcsv_monoiso
+    #   data.base <- v3_monoiso
+    # }
+    # else if (input$dataset == 2){
+    #   data.base.full <- hormcsv_MH
+    #   data.base <- v3_MH
+    # }
+    # else if (input$dataset == 3){
+    #   data.base.full <- hormcsv_adducts
+    #   data.base <- v3_adducts
+    # }
+    # else if (input$dataset == 4){
+    #   data.base.full <- hormcsv_bts
+    #   data.base <- v3_bts
+    # }
+    # else if (input$dataset == 5){
+    #   data.base.full <- hormcsv_both
+    #   data.base <- v3_both
+    # } #loop to take user input and select the database being searched against
     
       marker.vect <- c() #create an empty vector for markers to go into, markers are where in the expt dataset a match occurs
       for (i in 1:length(rvals$expt.masses)){
