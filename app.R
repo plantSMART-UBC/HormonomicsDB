@@ -222,6 +222,31 @@ server <- function(input, output) {
     
     #dataset selection algorithm
     
+    rvals$input_vector <- input$dataset
+    
+    user_databases <- as.numeric(rvals$input_vector)
+    
+    datalist_databases <- list()
+    
+    for (i in 1:length(user_databases)) {
+      
+      #itterates over the selected options via a switch
+      x <- switch(user_databases[i],
+                  hormcsv_monoiso,
+                  hormcsv_MH,
+                  hormcsv_adducts,
+                  hormcsv_bts)
+      
+      #stores as a datalist
+      datalist_databases[[i]] <- x
+      
+    }
+    
+    data.base.full <- do.call(rbind, datalist_databases)
+    colnames(data.base.full) <- c("Names", "Adduct", "mz")
+    data.base <- data.base.full[,3]
+    
+    
     ##old code from dropdown menu (remove before final commit)
     # if (input$dataset == 1){
     #   data.base.full <- hormcsv_monoiso
