@@ -48,7 +48,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      strong("HormonomicsDB v1.3.2"),
+      strong("HormonomicsDB v1.3.3"),
       br(),
       p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
       p("The University of British Columbia"),
@@ -102,22 +102,13 @@ ui <- fluidPage(
                              the search. After this is completed select how you want your data ordered and 
                              view it in the 'Screener Output' tab."),
 
+                           #gives checkboxes so user can select multiple datasets to search from at once
                            checkboxGroupInput("dataset", "Choose Dataset: ", 
                                               choices = list("PGR Monoisotopic" = 1,
                                                              "PGR M+H" = 2,
                                                              "PGR Adducts" = 3,
                                                              "PGR Biotransformations" = 4),
                                               selected = 1),
-                           
-                           ##old dropdown boxes for dataset selection (remove before final commit)
-                           # selectInput("dataset", "Choose Dataset:",
-                           #              choices = list("PGR Monoisotopic" = 1,
-                           #                             "PGR M+H" = 2,
-                           #                             "PGR Adducts" = 3,
-                           #                             "PGR Biotransformations" = 4,
-                           #                             "PGR Adducts and Biotransformations" = 5), 
-                           #              selected = NULL, multiple = FALSE, selectize = TRUE,
-                           #              width = NULL, size = NULL),
                            
                   numericInput('tol', "Mass tolerance (+/- Da)", 0.02, min = 0, max = 1, step = 0.0001), #tolerance input
                   fileInput('file1', 'Choose file to upload: ', #import csv button
@@ -221,17 +212,25 @@ server <- function(input, output) {
     rvals$expt.masses <- uploaded.data[,1] #pulls experimental m/z's for use in search function
     
     #dataset selection algorithm
-    
+    #takes the users inputs (as a vector) and stores as a reactive var
     rvals$input_vector <- input$dataset
     
+    #stores as a local var and converts to numeric (ints)
     user_databases <- as.numeric(rvals$input_vector)
     
+    #empty list for sticking the databases into
     datalist_databases <- list()
     
+    #for loop to operate a switch based
+    #on the users selected inputs for databases
     for (i in 1:length(user_databases)) {
       
       #itterates over the selected options via a switch
       x <- switch(user_databases[i],
+                  #add more databases here, they have to correspond
+                  #to the order that they appear above in the 
+                  #user interface and must be EXACTLY
+                  #the same format!
                   hormcsv_monoiso,
                   hormcsv_MH,
                   hormcsv_adducts,
@@ -242,33 +241,16 @@ server <- function(input, output) {
       
     }
     
+    #rbinds the selected databases into one dataframe
     data.base.full <- do.call(rbind, datalist_databases)
+    
+    #ensures that the column names are the same
     colnames(data.base.full) <- c("Names", "Adduct", "mz")
+    
+    #stores the 3rd column (mz) as its own vector
     data.base <- data.base.full[,3]
     
-    
-    ##old code from dropdown menu (remove before final commit)
-    # if (input$dataset == 1){
-    #   data.base.full <- hormcsv_monoiso
-    #   data.base <- v3_monoiso
-    # }
-    # else if (input$dataset == 2){
-    #   data.base.full <- hormcsv_MH
-    #   data.base <- v3_MH
-    # }
-    # else if (input$dataset == 3){
-    #   data.base.full <- hormcsv_adducts
-    #   data.base <- v3_adducts
-    # }
-    # else if (input$dataset == 4){
-    #   data.base.full <- hormcsv_bts
-    #   data.base <- v3_bts
-    # }
-    # else if (input$dataset == 5){
-    #   data.base.full <- hormcsv_both
-    #   data.base <- v3_both
-    # } #loop to take user input and select the database being searched against
-    
+    ##search/query algorithm here
       marker.vect <- c() #create an empty vector for markers to go into, markers are where in the expt dataset a match occurs
       for (i in 1:length(rvals$expt.masses)){
         marker <- which(rvals$expt.masses[i] >= data.base-input$tol & rvals$expt.masses[i] <= data.base+input$tol)
