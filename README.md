@@ -1,15 +1,20 @@
-# HormonomicsDB (v1.3.2)
+# HormonomicsDB (v1.4.0)
 ## Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch
 ## Contact: Dr. Susan J. Murch, susan.murch@ubc.ca
 
 HormonomicsDB is a tool developed at UBC Okanagan by the plantSMART research team to allow users to process their
- untargeted metabolomics data to putativley identify plant hormones.
+ untargeted metabolomics data to putativley identify plant hormones. 
 
-## Current Features (v1.3.2)
+## Recent Updates and Changes (v1.4.0)
+* Users can now search more than one database at a time.
+* Small bug fixes
+* More comments in the code for ease of use.
+* Seperated M+H and monoisotopic into different databases.
+
+## Current Features
 * About 250 Plant Hormones.
 * The HormonomicsDB shell to allow users to use their own dataset.
-* Seperated M+H and Monoisotopic into different databases.
-* Fixed minor bugs.
+* Tons of adducts and biotransformations to search from!
 
 ## How to run locally:
 1. Download the most recent version of HormonomicsDB
