@@ -7,11 +7,6 @@
 
 library(shiny) #call shiny library in
 
-HORMONOMICSDBV11_both <- read.csv("both.csv") #read in the melted data # before publishing change to "melt_hormcsv_june_4.csv"
-hormcsv_both <- data.frame(HORMONOMICSDBV11_both) #change name and format
-colnames(hormcsv_both) <- c("Names", "Adduct", "mz") #gives all the column names the same names
-v3_both <- hormcsv_both[,3]
-
 HORMONOMICSDBV11_adducts <- read.csv("adducts.csv") #read in the melted data 
 hormcsv_adducts <- data.frame(HORMONOMICSDBV11_adducts) #change name and format
 colnames(hormcsv_adducts) <- c("Names", "Adduct", "mz") #gives all the column names the same names
