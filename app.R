@@ -1,4 +1,4 @@
-#hormonomicsDB v1.3.3
+#hormonomicsDB v1.4.0
 #April 21st 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
@@ -48,7 +48,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      strong("HormonomicsDB v1.3.3"),
+      strong("HormonomicsDB v1.4.0"),
       br(),
       p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
       p("The University of British Columbia"),
