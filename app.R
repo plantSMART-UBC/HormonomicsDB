@@ -214,20 +214,26 @@ server <- function(input, output) {
     #reads in the .csv file and saves to global envrionment. sets header to TRUE
     rvals$upload <- read.csv(input$file1$datapath, header = TRUE,)
 
-    uploaded.data <- rvals$upload #takes user uploaded data and converts to local variable
-    header.names <- colnames(uploaded.data) #saves the header names
+    #takes user uploaded data and converts to local variable
+    uploaded.data <- rvals$upload
+    #saves the header names
+    header.names <- colnames(uploaded.data)
 
     if (length(header.names > 2)) {
-    sample.names <- header.names[3:length(header.names)]
+
     #saves sample names from 3rd index
-    }
-    else {
+    sample.names <- header.names[3:length(header.names)]
+
+    } else {
+
       sample.names <- c("N/A")
+
     }
 
     rvals$sample.names <- sample.names
 
-    rvals$expt.masses <- uploaded.data[,1] #pulls experimental m/z's for use in search function
+    #pulls experimetal m/z values for use in search function
+    rvals$expt.masses <- uploaded.data[,1]
 
     #dataset selection algorithm
     #takes the users inputs (as a vector) and stores as a reactive var
@@ -269,11 +275,20 @@ server <- function(input, output) {
     data.base <- data.base.full[,3]
 
     ##search/query algorithm here
-      marker.vect <- c() #create an empty vector for markers to go into, markers are where in the expt dataset a match occurs
+
+      #creates empty vector for markers to go into.
+      #markers are where in the expt dataset a match occurs
+      #based on the query options
+      marker.vect <- c()
       for (i in 1:length(rvals$expt.masses)){
+
         marker <- which(rvals$expt.masses[i] >= data.base-input$tol & rvals$expt.masses[i] <= data.base+input$tol)
+
         if (length(marker[i]) > 0){
-          marker.vect[[i]] <- marker #converts to useable vector
+
+          #converts to useable vector
+          marker.vect[[i]] <- marker
+
         }
       } #loop to find markers (where in expt dataset match occurs)
       exp.match <- c() # empty vector for position of experimental matches to go
@@ -284,14 +299,21 @@ server <- function(input, output) {
           exp.match[[j]] <- replicate.no.match
         }
       }
-      location.db <- as.vector(unlist(marker.vect)) # gives the matches from the data base as a vector
-      database.hits <- data.base.full[location.db,] # prints out everything from db where there is a match
-      position.experimental <- unlist(exp.match) # gives the postion of experimental hits from uploaded data
+
+      # gives the matches from the data base as a vector
+      location.db <- as.vector(unlist(marker.vect))
+
+      # prints out everything from db where there is a match
+      database.hits <- data.base.full[location.db,]
+
+      #gives position of experimental hits from uploaded data
+      position.experimental <- unlist(exp.match)
+
       results <- cbind(database.hits, rvals$upload[position.experimental,])
       colnames(results) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT")
       print_results <- results[,1:5]
       rvals$results <- print_results
-      ##if ()
+
       rvals$results_appended <- results
 
       ##json stuff for counting times data is user upload
@@ -313,64 +335,119 @@ server <- function(input, output) {
   output$contents <- renderTable({
 
     validate(
+      #error message here
       need(input$file1 != "", label = "A .csv file with m/z and RT values")
-    ) #eliminates the error message, so that the error message is much friendler
+    )
 
-
+    #merges the query results to predicted RTs
     results.rt <- merge(x = rvals$results_appended[,1:5], y = PRTs,
-                        by.x = "Compound Name", by.y = "Compound.Name", all.x = TRUE) #merges the query results to predicted RTs
+                        by.x = "Compound Name", by.y = "Compound.Name", all.x = TRUE)
+
     colnames(results.rt) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT", "Predicted RT")
-    delta.rt <- abs(results.rt[,5] - results.rt[,6]) #difference between expt and predicted RTs
-    percent.delta.rt <- 100-(delta.rt/results.rt[,5])*100 #convert last line to a percentage
-    results.for.download <- cbind(results.rt, percent.delta.rt) #add the percent in RT to the data
+
+    #difference between expt and predicted RTs
+    delta.rt <- abs(results.rt[,5] - results.rt[,6])
+
+    #convert last line to a percentage
+    percent.delta.rt <- 100-(delta.rt/results.rt[,5])*100
+
+    #add the percent in RT to the data
+    results.for.download <- cbind(results.rt, percent.delta.rt)
+
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z",
                                         "Experimental m/z", "RT", "Predicted RT", "Percent Match RT")
-    results.for.download.mz.rt <- paste0(results.for.download[,4], "_",results.for.download[,5]) #concatanate the expt mz and rt together
-    results.for.download <- cbind(results.for.download, results.for.download.mz.rt) #put the concat mz_rt into the data
+
+    #concats the expt m/z and rt together
+    results.for.download.mz.rt <- paste0(results.for.download[,4], "_",results.for.download[,5])
+
+    #put the concat ms_rt into the data
+    results.for.download <- cbind(results.for.download, results.for.download.mz.rt)
+
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
                                         "RT", "Predicted RT", "Percent Match RT", "mzrt")
+
+    #merges the query results to predicted RTs
     results.for.download <- merge(x = results.for.download, y = comp.classes,
-                        by.x = "Compound Name", by.y = "Name", all.x = TRUE) #merges the query results to predicted RTs
+                        by.x = "Compound Name", by.y = "Name", all.x = TRUE)
+
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
                                         "Experimental RT", "Predicted RT", "Percent Match RT", "mzrt", "Class")
 
+    #loop to take UI input and sort the output data in the UI
     if (input$orderby == 1){
+
       results.for.display <- results.for.download[order(-results.for.download[,7]),]
-    }
-    else if (input$orderby == 2){
+
+    } else if (input$orderby == 2){
+
       results.for.display <- results.for.download[order(results.for.download[,5]),]
-    }
-    else if (input$orderby == 3){
+
+    } else if (input$orderby == 3){
+
       results.for.display <- results.for.download[order(results.for.download[,6]),]
-    }
-    else if (input$orderby == 4){
+
+    } else if (input$orderby == 4){
+
       results.for.display <- results.for.download[order(results.for.download[,4]),]
-    } #loop to take UI input and sort the output data in the UI
 
-    experimental.intensities <- rvals$results_appended #takes experimental intensities and makes a local variable
-    experimental.intensities.mz.rt <- paste0(experimental.intensities[,4], "_", experimental.intensities[,5]) #concat to make mz_rt
-    experimental.intensities <- cbind(experimental.intensities.mz.rt, experimental.intensities[,6:ncol(experimental.intensities)]) #add mz_rt to experimental intensities
-    experimental.intensities <- unique(experimental.intensities) #drops duplicates (this is fine because isobars exist in rvals$results_appended)
-    colnames(experimental.intensities) <- c("mzrt1") #change first column name to mzrt1
+    }
 
+    #takes experimental intensities and makes a local variable
+    experimental.intensities <- rvals$results_appended
+
+    #concat to make mz_rt
+    experimental.intensities.mz.rt <- paste0(experimental.intensities[,4], "_", experimental.intensities[,5])
+
+    #add mz_rt to experimental intensities
+    experimental.intensities <- cbind(experimental.intensities.mz.rt, experimental.intensities[,6:ncol(experimental.intensities)])
+
+    #drops duplicates (this is fine because isobars exist in rvals$results_appended)
+    experimental.intensities <- unique(experimental.intensities)
+
+    #change first column name to mzrt1
+    colnames(experimental.intensities) <- c("mzrt1")
+
+    #pseudo-SQL left join for class in download file
     download.results <- merge(x = results.for.download, y = comp.classes,
-                              by.x = "Compound Name", by.y = "Name", all.x = TRUE) #pesudo-SQL left join for class in download file
+                              by.x = "Compound Name", by.y = "Name", all.x = TRUE)
+
+    #pseudo-SQL left join
     download.results <- merge(x = results.for.download, y = experimental.intensities,
-                              by.x = "mzrt", by.y = "mzrt1", all.x = TRUE) #pseudo-SQL left join
-    download.results <- as.matrix(download.results) #converts to matrix (to drop header)
-    download.results <- matrix(download.results, ncol = ncol(download.results), dimnames = NULL) #drops header
-    download.results <- data.frame(download.results) #convert back to dataframe (header = FALSE)
-    sample.names <- rvals$sample.names #bring sample names back into local envrionment
+                              by.x = "mzrt", by.y = "mzrt1", all.x = TRUE)
+
+    #converts to matrix (to drop header)
+    download.results <- as.matrix(download.results)
+
+    #drops header
+    download.results <- matrix(download.results, ncol = ncol(download.results), dimnames = NULL)
+
+    #convert back to dataframe (header = FALSE)
+    download.results <- data.frame(download.results)
+
+    #bring sample names back into local envrionment
+    sample.names <- rvals$sample.names
+
+    #column names
     colnames(download.results) <- c("mz_rt", "Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
-                                    "RT", "Predicted RT", "Percent Match RT", "Class", sample.names) #column names
-    download.results <- download.results[,c(1,2,9,3,4,5,6,7,8,10:ncol(download.results))] #rearranges to bring compound class in
-    download.results <- download.results[,2:ncol(download.results)] #drops mz_rt
-    download.results <- data.frame(download.results) #convert this data to data.frame so it can be downloaded by the user
+                                    "RT", "Predicted RT", "Percent Match RT", "Class", sample.names)
 
-    rvals$download.noncustom <- download.results #assign the data for download to a global variable so it can be downloaded within the GUI envrionment by the user
+    #rearranges to bring compound class in
+    download.results <- download.results[,c(1,2,9,3,4,5,6,7,8,10:ncol(download.results))]
 
-    results.for.display <- results.for.display[, c(1, 9, 2, 3, 4, 5, 6, 7, 8)] #reorders to bring class into the mix
-    results.for.display[,1:8] #displays the results we want in the GUI
+    #drops mz_rt
+    download.results <- download.results[,2:ncol(download.results)]
+
+    #convert this data to data.frame so it can be downloaded by the user
+    download.results <- data.frame(download.results)
+
+    #assign the data for download to a global variable so it can be downloaded within the GUI envrionment by the user
+    rvals$download.noncustom <- download.results
+
+    #reorders to bring class into the mix
+    results.for.display <- results.for.display[, c(1, 9, 2, 3, 4, 5, 6, 7, 8)]
+
+    #displays the results we want in the GUI
+    results.for.display[,1:8]
 
   },
   digits = 4 #displays 4 decimal points
@@ -378,10 +455,12 @@ server <- function(input, output) {
 
   output$downloadData <- downloadHandler(
     filename = function(){
-      paste("hormonomicsDB_results", Sys.Date(), ".csv", sep = "") #gives a unique name each time
+      #gives a unique name each time
+      paste("hormonomicsDB_results", Sys.Date(), ".csv", sep = "")
     },
     content = function(file){
-      write.csv(rvals$download.noncustom, file) #writes it to a .csv, reactive so it changes all the time
+      #writes it to a .csv, reactive so it changes all the time
+      write.csv(rvals$download.noncustom, file)
     }
   )
 
@@ -397,12 +476,12 @@ server <- function(input, output) {
     rvals$name_and_PRT <- userdata[1:custom.unique.compounds,]
     rvals$name_and_PRT <- rvals$name_and_PRT[,c(1,4)]
 
-
   })
 
   observeEvent(input$file2,{
     req(input$file2)
-    rvals$upload2.custom <- read.csv(input$file2$datapath, header = TRUE,) #reads in the .csv file and saves to global envrionment, set header = TRUE
+    #reads in the .csv file and saves to global envrionment, set header = TRUE
+    rvals$upload2.custom <- read.csv(input$file2$datapath, header = TRUE,)
 
     uploaded.data <- rvals$upload2.custom
     custom.col.names <- colnames(uploaded.data[,3:ncol(uploaded.data)])
@@ -412,24 +491,41 @@ server <- function(input, output) {
     v3 <- name_adduct_mass[,3]
 
     if (length(input$dataset_input) > 0){
-      custom.marker.vect <- c() #create an empty vector for markers to go into
+
+      #create an empty vector for markers to go into
+      custom.marker.vect <- c()
+
       for (i in 1:length(rvals$custom.expt.masses)){
+
         marker.custom <- which(rvals$custom.expt.masses[i] >= v3-input$tol2 & rvals$custom.expt.masses[i] <= v3+input$tol2)
+
         if (length(marker.custom[i]) > 0){
+
           custom.marker.vect[[i]] <- marker.custom
+
         }
       }
-      custom.exp.match <- c() # empty vector for position of experimental matches to go
+      #empty vector for position of experimental matches to go
+      custom.exp.match <- c()
       for (j in 1:length(custom.marker.vect)){
+
         if (length(unlist(custom.marker.vect[j])) > 0){
+
           custom.no.match <- length(unlist(custom.marker.vect[j]))
           custom.vvv <- (rep(j, length(unlist(custom.marker.vect[j]))))
           custom.exp.match[[j]] <- custom.vvv
+
         }
       }
-      custom.location.db <- as.vector(unlist(custom.marker.vect)) # gives the matches from the data base as a vector
-      custom.db.hits <- name_adduct_mass[custom.location.db,] # prints out everything from db where there is a match
-      custom.pos.exp <- unlist(custom.exp.match) # gives the postion of experimental hits from uploaded data
+
+      # gives the matches from the data base as a vector
+      custom.location.db <- as.vector(unlist(custom.marker.vect))
+
+      # prints out everything from db where there is a match
+      custom.db.hits <- name_adduct_mass[custom.location.db,]
+
+      # gives the postion of experimental hits from uploaded data
+      custom.pos.exp <- unlist(custom.exp.match)
       custom.results <- cbind(custom.db.hits, rvals$upload2.custom[custom.pos.exp,])
       colnames(custom.results) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT")
       custom.print_results <- custom.results[,1:5]
@@ -456,49 +552,90 @@ server <- function(input, output) {
   output$contents_shell <- renderTable({
 
     validate(
+      #eliminates the error message, so that the error message is much friendler
       need(input$file2 != "", label = "A .csv file with m/z and RT values")
-    ) #eliminates the error message, so that the error message is much friendler
+    )
 
-
+    #psuedo SQL left join
     custom.result.rt <- merge(x = rvals$custom.results.appended[,1:5], y = rvals$name_and_PRT,
-                              by.x = "Compound Name", by.y = "Compound.Name", all.x = TRUE) #psuedo SQL left join
-    colnames(custom.result.rt) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT", "Predicted RT") #rename cols
-    custom.delta.rt <- abs(custom.result.rt[,5] - custom.result.rt[,6]) #computes difference between expt rt and predicted rt
-    custom.percent.delta.rt <- 100-(custom.delta.rt/custom.result.rt[,5])*100 #converts to percentage
-    custom.results.rt.delta.final <- cbind(custom.result.rt, custom.percent.delta.rt) #binds the percent diff to the results
+                              by.x = "Compound Name", by.y = "Compound.Name", all.x = TRUE)
+
+    #rename cols
+    colnames(custom.result.rt) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT", "Predicted RT")
+
+    #computes difference between expt rt and predicted rt
+    custom.delta.rt <- abs(custom.result.rt[,5] - custom.result.rt[,6])
+
+    #converts to %
+    custom.percent.delta.rt <- 100-(custom.delta.rt/custom.result.rt[,5])*100
+
+    #binds the percent diff to the results
+    custom.results.rt.delta.final <- cbind(custom.result.rt, custom.percent.delta.rt)
+
+    #changes column names
     colnames(custom.results.rt.delta.final) <- c("Compound Name", "Adduct/BT", "Actual m/z",
                                                  "Experimental m/z", "RT", "Predicted RT",
-                                                 "Percent Match RT", rvals$custom.col.names) #changes column names
-    custom.results.rt.delta.final.mzrt <- paste0(custom.results.rt.delta.final[,4], "_", custom.results.rt.delta.final[,5]) #creates mz_rt for each hit
-    custom.results.for.download <- cbind(custom.results.rt.delta.final, custom.results.rt.delta.final.mzrt) #binds mz_rt to rest of results
+                                                 "Percent Match RT", rvals$custom.col.names)
+
+    #creats msrt for each hit
+    custom.results.rt.delta.final.mzrt <- paste0(custom.results.rt.delta.final[,4], "_", custom.results.rt.delta.final[,5])
+
+    #binds mz_rt to rest of results
+    custom.results.for.download <- cbind(custom.results.rt.delta.final, custom.results.rt.delta.final.mzrt)
+
+    #column names
     colnames(custom.results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z",
                                                "Experimental m/z", "RT", "Predicted RT",
-                                               "Percent Match RT", "mzrt") #column names
+                                               "Percent Match RT", "mzrt")
 
+    #logic to order results output to GUI based on users input (order by)
     if (input$orderby_shell == 1){
+
       shell.results.sorted <- custom.results.rt.delta.final[order(custom.results.rt.delta.final[,5]),]
-    }else if (input$orderby_shell == 2){
+
+    } else if (input$orderby_shell == 2){
+
       shell.results.sorted <- custom.results.rt.delta.final[order(custom.results.rt.delta.final[,6]),]
-    }else if (input$orderby_shell == 3){
+
+    } else if (input$orderby_shell == 3){
+
       shell.results.sorted <- custom.results.rt.delta.final[order(-custom.results.rt.delta.final[,7]),]
-    }else if (input$orderby_shell == 4){
+
+    } else if (input$orderby_shell == 4){
+
       shell.results.sorted <- custom.results.rt.delta.final[order(custom.results.rt.delta.final[,4]),]
-    } #logic to order results output to GUI based on users input (order by)
 
-    custom.experimental.intensities <- rvals$custom.results.appended #takes intensities and brings into local envrionment
+    }
+
+    #takes intensities and brings into local envrionment
+    custom.experimental.intensities <- rvals$custom.results.appended
+
+    #creates mz_rt for each hit
     custom.experimental.intensities.mzrt <- paste0(custom.experimental.intensities[,4],
-                                                   "_", custom.experimental.intensities[,5]) #creates mz_rt for each hit
+                                                   "_", custom.experimental.intensities[,5])
+
+    #binds back together
     custom.experimental.intensities <- cbind(custom.experimental.intensities.mzrt,
-                                             custom.experimental.intensities[,6:ncol(custom.experimental.intensities)]) #binds back together
-    custom.experimental.intensities <- unique(custom.experimental.intensities) #removes duplicates
-    colnames(custom.experimental.intensities) <- c("mzrt1") #renaming the mz_rt column
+                                             custom.experimental.intensities[,6:ncol(custom.experimental.intensities)])
 
+    #removes duplicates
+    custom.experimental.intensities <- unique(custom.experimental.intensities)
+
+    #renaming the mz_rt column
+    colnames(custom.experimental.intensities) <- c("mzrt1")
+
+    #inner join
     custom.download.results <- merge(x = custom.results.for.download, y = custom.experimental.intensities,
-                                     by.x = "mzrt", by.y = "mzrt1", all.x = TRUE) #inner join
-    custom.download.results <- data.frame(custom.download.results) #df for downloading
-    rvals$download.custom.appended <- custom.download.results #send to global envrionment so it can be downloaded from GUI
+                                     by.x = "mzrt", by.y = "mzrt1", all.x = TRUE)
 
-    shell.results.sorted[,1:7] #output final results into GUI for user to see
+    #DF for downloading
+    custom.download.results <- data.frame(custom.download.results)
+
+    #send to global envrio for download through GUI
+    rvals$download.custom.appended <- custom.download.results
+
+    #output final results into GUI for user to see
+    shell.results.sorted[,1:7]
 
   },
   digits = 4 #always displays 4 decimal points
@@ -506,10 +643,12 @@ server <- function(input, output) {
 
   output$downloadData_shell <- downloadHandler(
     filename = function(){
-      paste("hormonomicsDB_shell_results_", Sys.Date(), ".csv", sep = "") #gives a unique name each time
+      #gives a unique name each time
+      paste("hormonomicsDB_shell_results_", Sys.Date(), ".csv", sep = "")
     },
     content = function(file){
-      write.csv(rvals$download.custom.appended, file) #writes it to a .csv, reactive so it changes all the time
+      #writes it to a .csv, reactive so it changes all the time
+      write.csv(rvals$download.custom.appended, file)
     }
   )
 
