@@ -21,7 +21,7 @@ HormonomicsDB is a tool developed at UBC Okanagan by the plantSMART research tea
 2. Make sure that your version of R and R Studio are up to date. To do this run the following:
 
 ```
-installr: install.packages("installr")
+install.packages("installr")
 library(installr)
 updateR()
 ```
