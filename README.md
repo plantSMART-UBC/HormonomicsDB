@@ -1,4 +1,4 @@
-# HormonomicsDB (v1.4.0)
+# HormonomicsDB (v1.4.1)
 ## Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch
 ## Contact: Dr. Susan J. Murch, susan.murch@ubc.ca
 
