@@ -1,5 +1,5 @@
-#hormonomicsDB v1.4.0
-#April 21st 2021
+#hormonomicsDB v1.4.1
+#July 21st 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
@@ -42,19 +42,11 @@ library(rjson)
 jsonCOUNTER <- fromJSON(file = "counter.json")
 
 #convert to dataframe
+#reads in current count
+#tool must be used (below) to make the counter increase
+#actual data upload
 jsonDF <- as.data.frame(jsonCOUNTER)
-
-#adds single digit when run
-jsonDF[1,1] <- jsonDF[1,1] + 1
 timesUsed <- jsonDF[1,1]
-
-#call jsonDF[1,1] to get the number of times the script has been run.
-
-#convert back to JSON file
-jsonNewCount <- toJSON(jsonDF)
-
-#writes as JSON
-write(jsonNewCount, "counter.json")
 
 #####
 
@@ -72,7 +64,7 @@ ui <- fluidPage(
       p("HormonomicsDB is a tool developed at UBC Okanagan by the plantSMART
         research team to allow users to process their untargeted metabolomics
         data to putativley identify plant hormones."),
-      textOutput("timesRUN"), ##fix this
+      textOutput("timesRUN"), ##prints the output
     ),
     mainPanel(
       tabsetPanel(type = "tabs",
@@ -82,19 +74,20 @@ ui <- fluidPage(
                            br(),
 
                            strong("Instructions"),
+                           #edit this text to change the instructions
                            p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the
-        'HormonomicsDB shell' to upload your own dataset use our platform to perform your
-        own custom queries of your untargeted metabolomics data. View your output results in the tab
-        next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
+                            'HormonomicsDB shell' to upload your own dataset use our platform to perform your
+                            own custom queries of your untargeted metabolomics data. View your output results in the tab
+                            next to the tool you used then download your results as a .csv file."),
                            br(),
 
                            strong("Database Descriptions: "),
                            p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
-               ESI+ mode.")),
+                          ESI+ mode.")),
                            p(("PGR Adducts: Common adducts of plant growth regulators in ESI+ mode.")),
                            p(("PGR Biotransformations: Common predicted biotransformations of plant growth regulators in ESI+ mode.")),
                            p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
-               in ESI mode.")),
+                          in ESI+ mode.")),
                            br(),
 
                            strong("Code Availability"),
@@ -165,8 +158,11 @@ ui <- fluidPage(
                                      )
                            ),
                            radioButtons("orderby_shell", "Order By:",
-                                        choices = list("Experimental RT" = 1, "Predicted RT" = 2, "% RT Match" = 3, "Experimental m/z" = 4), selected = 1),
-                           # checkboxInput("appenddata", "Append data?", value = FALSE, width = NULL),
+                                        choices = list("Experimental RT" = 1,
+                                                       "Predicted RT" = 2,
+                                                       "% RT Match" = 3,
+                                                       "Experimental m/z" = 4),
+                                                        selected = 1),
                            downloadButton("downloadData_shell", "Download Results"),
                            tags$hr(),
                   ),
@@ -184,8 +180,10 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
-  options(shiny.maxRequestSize = 10*1024^2) #set max upload size to 10 Mb to prevent crashing.
+  #set max upload size to 10 Mb to prevent crashing
+  options(shiny.maxRequestSize = 10*1024^2)
 
+  #initalizes reactive (public) variables
   rvals <- reactiveValues(
     upload = NULL,
     expt.masses = NULL,
@@ -206,12 +204,15 @@ server <- function(input, output) {
     download.custom.appended = NULL,
     download.noncustom = NULL,
     sample.names = NULL,
-    input_vector = NULL
-  ) #initalizes reactive (public) variables
+    input_vector = NULL,
+    timesUsed = NULL
+  )
 
   observeEvent(input$file1,{
     req(input$file1)
-    rvals$upload <- read.csv(input$file1$datapath, header = TRUE,) #reads in the .csv file and saves to global envrionment, set header = TRUE
+
+    #reads in the .csv file and saves to global envrionment. sets header to TRUE
+    rvals$upload <- read.csv(input$file1$datapath, header = TRUE,)
 
     uploaded.data <- rvals$upload #takes user uploaded data and converts to local variable
     header.names <- colnames(uploaded.data) #saves the header names
@@ -292,6 +293,20 @@ server <- function(input, output) {
       rvals$results <- print_results
       ##if ()
       rvals$results_appended <- results
+
+      ##json stuff for counting times data is user upload
+      ##through the front end of the main tool
+      ##only counts when the tool has actually been used!!
+
+      #adds single digit when run
+      jsonDF[1,1] <- jsonDF[1,1] + 1
+      rvals$timesUsed <- jsonDF[1,1]
+
+      #convert back to JSON file
+      jsonNewCount <- toJSON(jsonDF)
+
+      #writes as JSON
+      write(jsonNewCount, "counter.json")
 
   })
 
@@ -421,6 +436,21 @@ server <- function(input, output) {
       rvals$custom.results <- custom.print_results
       rvals$custom.results.appended <- custom.results
     }
+
+    ##json stuff for counting times data is user upload
+    ##through the front end of the custon queue tool
+    ##only counts when the tool has actually been used!!
+
+    #adds single digit when run
+    jsonDF[1,1] <- jsonDF[1,1] + 1
+    rvals$timesUsed <- jsonDF[1,1]
+
+    #convert back to JSON file
+    jsonNewCount <- toJSON(jsonDF)
+
+    #writes as JSON
+    write(jsonNewCount, "counter.json")
+
   })
 
   output$contents_shell <- renderTable({
@@ -483,12 +513,16 @@ server <- function(input, output) {
     }
   )
 
+
   output$timesRUN <- renderText({
 
-    #prints the number of times the app has been used
+    #prints the number of times the app has been used succesfully
+
     paste("The app has been run ", timesUsed, " times.")
 
   })
+
 }
 
-shinyApp(ui = ui, server = server) #make the server talk to the ui
+#make the server talk to the ui
+shinyApp(ui = ui, server = server)
