@@ -95,11 +95,12 @@ ui <- fluidPage(
                            br(),
                            strong("Terms and Agreements"),
                            p("HormonomicsDB was developed for research use only and is not intended for use in diagnostic work.
-                             Dispite diligent validation and bug fixing, we are not responsible for any mistakes the application
+                             Despite diligent validation and bug fixing, we are not responsible for any mistakes the application
                              makes in data processing. Considering this, please inform us immediately of any bugs that you encounter."),
                            p("We do not save any data that is uploaded to the server, it is
-                             immediatley deleted with every new session that you start."),
-                           p("Please acknowledge the aforementioned authors in any work where HormonomicsDB has been used."),
+                             immediately deleted with every new session that you start."),
+                           p("Please cite the github repository for this project when using HormonomicsDB in
+                             any work."),
                            ),
 
                   tabPanel("M/Z Screener",
