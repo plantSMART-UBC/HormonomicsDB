@@ -5,24 +5,25 @@
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
 #Website: hormonomicsDB.com
 
-library(shiny) #call shiny library in
+#call shiny library in
+library(shiny)
 
-HORMONOMICSDBV11_adducts <- read.csv("adducts.csv") #read in the melted data 
+HORMONOMICSDBV11_adducts <- read.csv("adducts.csv") #read in the melted data
 hormcsv_adducts <- data.frame(HORMONOMICSDBV11_adducts) #change name and format
 colnames(hormcsv_adducts) <- c("Names", "Adduct", "mz") #gives all the column names the same names
 v3_adducts <- hormcsv_adducts[,3]
 
-HORMONOMICSDBV11_bts <- read.csv("biotransformations.csv") #read in the melted data 
+HORMONOMICSDBV11_bts <- read.csv("biotransformations.csv") #read in the melted data
 hormcsv_bts <- data.frame(HORMONOMICSDBV11_bts) #change name and format
 colnames(hormcsv_bts) <- c("Names", "Adduct", "mz") #gives all the column names the same names
 v3_bts <- hormcsv_bts[,3]
 
-HORMONOMICSDBV11_MH <- read.csv("M_plus_H_adduct.csv") #read in the melted data 
+HORMONOMICSDBV11_MH <- read.csv("M_plus_H_adduct.csv") #read in the melted data
 hormcsv_MH <- data.frame(HORMONOMICSDBV11_MH) #change name and format
 colnames(hormcsv_MH) <- c("Names", "Adduct", "mz") #gives all the column names the same names
 v3_MH <- hormcsv_MH[,3]
 
-HORMONOMICSDBV11_monoiso <- read.csv("monoisotopic.csv") #read in the melted data 
+HORMONOMICSDBV11_monoiso <- read.csv("monoisotopic.csv") #read in the melted data
 hormcsv_monoiso <- data.frame(HORMONOMICSDBV11_monoiso) #change name and format
 colnames(hormcsv_monoiso) <- c("Names", "Adduct", "mz") #gives all the column names the same names
 v3_monoiso <- hormcsv_monoiso[,3]
@@ -34,13 +35,33 @@ comp.classes <- read.csv("comp_classes.csv")
 comp.classes <- data.frame(comp.classes)
 colnames(comp.classes) <- c("Name", "Class")
 #####
+#json stuff here to count how many times the script has been run
+library(rjson)
+
+#read in json file from directory
+jsonCOUNTER <- fromJSON(file = "counter.json")
+
+#convert to dataframe
+jsonDF <- as.data.frame(jsonCOUNTER)
+
+#adds single digit when run
+jsonDF[1,1] <- jsonDF[1,1] + 1
+timesUsed <- jsonDF[1,1]
+
+#call jsonDF[1,1] to get the number of times the script has been run.
+
+#convert back to JSON file
+jsonNewCount <- toJSON(jsonDF)
+
+#writes as JSON
+write(jsonNewCount, "counter.json")
 
 #####
 
 ui <- fluidPage(
-  
+
   titlePanel("HormonomicsDB"),
-  
+
   sidebarLayout(
     sidebarPanel(
       strong("HormonomicsDB v1.4.0"),
@@ -51,21 +72,22 @@ ui <- fluidPage(
       p("HormonomicsDB is a tool developed at UBC Okanagan by the plantSMART
         research team to allow users to process their untargeted metabolomics
         data to putativley identify plant hormones."),
+      textOutput("timesRUN"), ##fix this
     ),
     mainPanel(
       tabsetPanel(type = "tabs",
-                  
-                  
+
+
                   tabPanel("Instructions",
                            br(),
-                           
+
                            strong("Instructions"),
-                           p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the 
+                           p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the
         'HormonomicsDB shell' to upload your own dataset use our platform to perform your
         own custom queries of your untargeted metabolomics data. View your output results in the tab
         next to the tool you used then download your results as a .csv file."), #edit this text to change the instructions
                            br(),
-                           
+
                            strong("Database Descriptions: "),
                            p(("PGR Monoisotopic and M+H: Only the monoisotopic mass and M+H adduct for the plant growth regulators in
                ESI+ mode.")),
@@ -74,7 +96,7 @@ ui <- fluidPage(
                            p(("PGR Adduct and Biotransformations: Both adducts and predicted biotransformations for plant growth regulators
                in ESI mode.")),
                            br(),
-                           
+
                            strong("Code Availability"),
                            p("All source code and files are available at https://github.com/plantSMART-UBC/HormonomicsDB"),
                            br(),
@@ -86,25 +108,25 @@ ui <- fluidPage(
                              immediatley deleted with every new session that you start."),
                            p("Please acknowledge the aforementioned authors in any work where HormonomicsDB has been used."),
                            ),
-                  
+
                   tabPanel("M/Z Screener",
-                           
+
                            br(),
-                           
+
                            strong("Instructions: "),
                            p("Select which datasets to search from then select a search tolerance
                              and then upload your formatted data as a .csv and allow up to 3 minutes to perform
-                             the search. After this is completed select how you want your data ordered and 
+                             the search. After this is completed select how you want your data ordered and
                              view it in the 'Screener Output' tab."),
 
                            #gives checkboxes so user can select multiple datasets to search from at once
-                           checkboxGroupInput("dataset", "Choose Dataset: ", 
+                           checkboxGroupInput("dataset", "Choose Dataset: ",
                                               choices = list("PGR Monoisotopic" = 1,
                                                              "PGR M+H" = 2,
                                                              "PGR Adducts" = 3,
                                                              "PGR Biotransformations" = 4),
                                               selected = 1),
-                           
+
                   numericInput('tol', "Mass tolerance (+/- Da)", 0.02, min = 0, max = 1, step = 0.0001), #tolerance input
                   fileInput('file1', 'Choose file to upload: ', #import csv button
                             accept = c(
@@ -119,11 +141,11 @@ ui <- fluidPage(
                                selected = 1),
                   downloadButton("downloadData", "Download Results"),
                   tags$hr(),),
-                  
+
                   tabPanel("Screener Output",
                            br(),
                            tableOutput('contents')),
-                  
+
                   tabPanel("HormonomicsDB Shell",
                            br(),
                            strong("Instructions: "),
@@ -148,7 +170,7 @@ ui <- fluidPage(
                            downloadButton("downloadData_shell", "Download Results"),
                            tags$hr(),
                   ),
-                  
+
                   tabPanel("Shell Output",
                            br(),
                            tableOutput('contents_shell'),
@@ -163,7 +185,7 @@ ui <- fluidPage(
 server <- function(input, output) {
 
   options(shiny.maxRequestSize = 10*1024^2) #set max upload size to 10 Mb to prevent crashing.
-  
+
   rvals <- reactiveValues(
     upload = NULL,
     expt.masses = NULL,
@@ -186,14 +208,14 @@ server <- function(input, output) {
     sample.names = NULL,
     input_vector = NULL
   ) #initalizes reactive (public) variables
-  
+
   observeEvent(input$file1,{
     req(input$file1)
     rvals$upload <- read.csv(input$file1$datapath, header = TRUE,) #reads in the .csv file and saves to global envrionment, set header = TRUE
-    
+
     uploaded.data <- rvals$upload #takes user uploaded data and converts to local variable
     header.names <- colnames(uploaded.data) #saves the header names
-    
+
     if (length(header.names > 2)) {
     sample.names <- header.names[3:length(header.names)]
     #saves sample names from 3rd index
@@ -201,50 +223,50 @@ server <- function(input, output) {
     else {
       sample.names <- c("N/A")
     }
-    
+
     rvals$sample.names <- sample.names
-    
+
     rvals$expt.masses <- uploaded.data[,1] #pulls experimental m/z's for use in search function
-    
+
     #dataset selection algorithm
     #takes the users inputs (as a vector) and stores as a reactive var
     rvals$input_vector <- input$dataset
-    
+
     #stores as a local var and converts to numeric (ints)
     user_databases <- as.numeric(rvals$input_vector)
-    
+
     #empty list for sticking the databases into
     datalist_databases <- list()
-    
+
     #for loop to operate a switch based
     #on the users selected inputs for databases
     for (i in 1:length(user_databases)) {
-      
+
       #itterates over the selected options via a switch
       x <- switch(user_databases[i],
                   #add more databases here, they have to correspond
-                  #to the order that they appear above in the 
+                  #to the order that they appear above in the
                   #user interface and must be EXACTLY
                   #the same format!
                   hormcsv_monoiso,
                   hormcsv_MH,
                   hormcsv_adducts,
                   hormcsv_bts)
-      
+
       #stores as a datalist
       datalist_databases[[i]] <- x
-      
+
     }
-    
+
     #rbinds the selected databases into one dataframe
     data.base.full <- do.call(rbind, datalist_databases)
-    
+
     #ensures that the column names are the same
     colnames(data.base.full) <- c("Names", "Adduct", "mz")
-    
+
     #stores the 3rd column (mz) as its own vector
     data.base <- data.base.full[,3]
-    
+
     ##search/query algorithm here
       marker.vect <- c() #create an empty vector for markers to go into, markers are where in the expt dataset a match occurs
       for (i in 1:length(rvals$expt.masses)){
@@ -272,14 +294,14 @@ server <- function(input, output) {
       rvals$results_appended <- results
 
   })
-  
+
   output$contents <- renderTable({
-    
+
     validate(
       need(input$file1 != "", label = "A .csv file with m/z and RT values")
-    ) #eliminates the error message, so that the error message is much friendler 
-    
-    
+    ) #eliminates the error message, so that the error message is much friendler
+
+
     results.rt <- merge(x = rvals$results_appended[,1:5], y = PRTs,
                         by.x = "Compound Name", by.y = "Compound.Name", all.x = TRUE) #merges the query results to predicted RTs
     colnames(results.rt) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT", "Predicted RT")
@@ -308,14 +330,14 @@ server <- function(input, output) {
     }
     else if (input$orderby == 4){
       results.for.display <- results.for.download[order(results.for.download[,4]),]
-    } #loop to take UI input and sort the output data in the UI 
-    
+    } #loop to take UI input and sort the output data in the UI
+
     experimental.intensities <- rvals$results_appended #takes experimental intensities and makes a local variable
     experimental.intensities.mz.rt <- paste0(experimental.intensities[,4], "_", experimental.intensities[,5]) #concat to make mz_rt
     experimental.intensities <- cbind(experimental.intensities.mz.rt, experimental.intensities[,6:ncol(experimental.intensities)]) #add mz_rt to experimental intensities
     experimental.intensities <- unique(experimental.intensities) #drops duplicates (this is fine because isobars exist in rvals$results_appended)
     colnames(experimental.intensities) <- c("mzrt1") #change first column name to mzrt1
-    
+
     download.results <- merge(x = results.for.download, y = comp.classes,
                               by.x = "Compound Name", by.y = "Name", all.x = TRUE) #pesudo-SQL left join for class in download file
     download.results <- merge(x = results.for.download, y = experimental.intensities,
@@ -331,14 +353,14 @@ server <- function(input, output) {
     download.results <- data.frame(download.results) #convert this data to data.frame so it can be downloaded by the user
 
     rvals$download.noncustom <- download.results #assign the data for download to a global variable so it can be downloaded within the GUI envrionment by the user
-    
+
     results.for.display <- results.for.display[, c(1, 9, 2, 3, 4, 5, 6, 7, 8)] #reorders to bring class into the mix
     results.for.display[,1:8] #displays the results we want in the GUI
-    
+
   },
   digits = 4 #displays 4 decimal points
   )
-  
+
   output$downloadData <- downloadHandler(
     filename = function(){
       paste("hormonomicsDB_results", Sys.Date(), ".csv", sep = "") #gives a unique name each time
@@ -347,33 +369,33 @@ server <- function(input, output) {
       write.csv(rvals$download.noncustom, file) #writes it to a .csv, reactive so it changes all the time
     }
   )
-  
+
   observeEvent(input$dataset_input,{
     req(input$dataset_input)
     rvals$userdata <- read.csv(input$dataset_input$datapath, header = TRUE,)
     userdata <- rvals$userdata
     colnames(userdata) <- c("Compound.Name", "Adduct", "Mass", "RTP")
-    
+
     rvals$name_adduct_mass <- userdata[,1:3]
-    
+
     custom.unique.compounds <- length(unique(userdata[,1]))
     rvals$name_and_PRT <- userdata[1:custom.unique.compounds,]
     rvals$name_and_PRT <- rvals$name_and_PRT[,c(1,4)]
-    
-    
+
+
   })
-  
+
   observeEvent(input$file2,{
     req(input$file2)
     rvals$upload2.custom <- read.csv(input$file2$datapath, header = TRUE,) #reads in the .csv file and saves to global envrionment, set header = TRUE
-    
+
     uploaded.data <- rvals$upload2.custom
     custom.col.names <- colnames(uploaded.data[,3:ncol(uploaded.data)])
     rvals$custom.expt.masses <- uploaded.data[,1]
-    
+
     name_adduct_mass <- rvals$name_adduct_mass
     v3 <- name_adduct_mass[,3]
-    
+
     if (length(input$dataset_input) > 0){
       custom.marker.vect <- c() #create an empty vector for markers to go into
       for (i in 1:length(rvals$custom.expt.masses)){
@@ -400,14 +422,14 @@ server <- function(input, output) {
       rvals$custom.results.appended <- custom.results
     }
   })
-  
+
   output$contents_shell <- renderTable({
-    
+
     validate(
       need(input$file2 != "", label = "A .csv file with m/z and RT values")
-    ) #eliminates the error message, so that the error message is much friendler 
-    
-    
+    ) #eliminates the error message, so that the error message is much friendler
+
+
     custom.result.rt <- merge(x = rvals$custom.results.appended[,1:5], y = rvals$name_and_PRT,
                               by.x = "Compound Name", by.y = "Compound.Name", all.x = TRUE) #psuedo SQL left join
     colnames(custom.result.rt) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z", "RT", "Predicted RT") #rename cols
@@ -422,7 +444,7 @@ server <- function(input, output) {
     colnames(custom.results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z",
                                                "Experimental m/z", "RT", "Predicted RT",
                                                "Percent Match RT", "mzrt") #column names
-    
+
     if (input$orderby_shell == 1){
       shell.results.sorted <- custom.results.rt.delta.final[order(custom.results.rt.delta.final[,5]),]
     }else if (input$orderby_shell == 2){
@@ -432,26 +454,26 @@ server <- function(input, output) {
     }else if (input$orderby_shell == 4){
       shell.results.sorted <- custom.results.rt.delta.final[order(custom.results.rt.delta.final[,4]),]
     } #logic to order results output to GUI based on users input (order by)
-    
+
     custom.experimental.intensities <- rvals$custom.results.appended #takes intensities and brings into local envrionment
     custom.experimental.intensities.mzrt <- paste0(custom.experimental.intensities[,4],
-                                                   "_", custom.experimental.intensities[,5]) #creates mz_rt for each hit 
+                                                   "_", custom.experimental.intensities[,5]) #creates mz_rt for each hit
     custom.experimental.intensities <- cbind(custom.experimental.intensities.mzrt,
                                              custom.experimental.intensities[,6:ncol(custom.experimental.intensities)]) #binds back together
-    custom.experimental.intensities <- unique(custom.experimental.intensities) #removes duplicates 
+    custom.experimental.intensities <- unique(custom.experimental.intensities) #removes duplicates
     colnames(custom.experimental.intensities) <- c("mzrt1") #renaming the mz_rt column
 
     custom.download.results <- merge(x = custom.results.for.download, y = custom.experimental.intensities,
                                      by.x = "mzrt", by.y = "mzrt1", all.x = TRUE) #inner join
     custom.download.results <- data.frame(custom.download.results) #df for downloading
     rvals$download.custom.appended <- custom.download.results #send to global envrionment so it can be downloaded from GUI
-    
+
     shell.results.sorted[,1:7] #output final results into GUI for user to see
-    
+
   },
   digits = 4 #always displays 4 decimal points
   )
-  
+
   output$downloadData_shell <- downloadHandler(
     filename = function(){
       paste("hormonomicsDB_shell_results_", Sys.Date(), ".csv", sep = "") #gives a unique name each time
@@ -460,6 +482,13 @@ server <- function(input, output) {
       write.csv(rvals$download.custom.appended, file) #writes it to a .csv, reactive so it changes all the time
     }
   )
+
+  output$timesRUN <- renderText({
+
+    #prints the number of times the app has been used
+    paste("The app has been run ", timesUsed, " times.")
+
+  })
 }
 
 shinyApp(ui = ui, server = server) #make the server talk to the ui
