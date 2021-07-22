@@ -56,7 +56,7 @@ ui <- fluidPage(
 
   sidebarLayout(
     sidebarPanel(
-      strong("HormonomicsDB v1.4.0"),
+      strong("HormonomicsDB v1.4.1"),
       br(),
       p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
       p("The University of British Columbia"),
@@ -101,7 +101,7 @@ ui <- fluidPage(
                              immediately deleted with every new session that you start."),
                            p("Please cite the github repository for this project when using HormonomicsDB in
                              any work."),
-                           ),
+                           tags$hr(),),
 
                   tabPanel("M/Z Screener",
 
@@ -112,12 +112,20 @@ ui <- fluidPage(
                              and then upload your formatted data as a .csv and allow up to 3 minutes to perform
                              the search. After this is completed select how you want your data ordered and
                              view it in the 'Screener Output' tab."),
+                           p("Note, 'ionization mode' only works for M+H and M-H adducts, as well as synthetic biotransformations
+                             at the moment."),
+                           
+                           #ESI + or -
+                           radioButtons("ionMode", "Select Ionization Mode: ",
+                                        choices = list("ESI +" = 1,
+                                                       "ESI -" = 2),
+                                        selected = 1),
 
                            #gives checkboxes so user can select multiple datasets to search from at once
                            checkboxGroupInput("dataset", "Choose Dataset: ",
                                               choices = list("PGR Monoisotopic" = 1,
-                                                             "PGR M+H" = 2,
-                                                             "PGR Adducts" = 3,
+                                                             "PGR M+H or M-H" = 2,
+                                                             "PGR Adducts (ESI + Only)" = 3,
                                                              "PGR Biotransformations" = 4),
                                               selected = 1),
 
@@ -127,7 +135,8 @@ ui <- fluidPage(
                               'text/csv',
                               '.csv'
                             )),
-                  radioButtons("orderby", "Order By:",
+           
+       radioButtons("orderby", "Order By:",
                                choices = list("% RT Match" = 1,
                                               "Experimental RT" = 2,
                                               "Predicted RT" = 3,
@@ -135,7 +144,6 @@ ui <- fluidPage(
                                selected = 1),
                   downloadButton("downloadData", "Download Results"),
                   tags$hr(),),
-
                   tabPanel("Screener Output",
                            br(),
                            tableOutput('contents')),
@@ -271,6 +279,28 @@ server <- function(input, output) {
 
     #ensures that the column names are the same
     colnames(data.base.full) <- c("Names", "Adduct", "mz")
+    
+    if(input$ionMode == 1) {
+      
+      #if ESI+ is selected by the user keep the 
+      #same masses since theyre ESI+
+      data.base.full[,3] <- data.base.full[,3]
+      
+    } else if (input$ionMode == 2) {
+      
+      #if ESI- is selected by the user 
+      #remove 1.00727 m/z which is mass 
+      #of H less an extra electron
+      data.base.full[,3] <- data.base.full[,3] - 1.00727
+      
+      if (input$dataset == 2) {
+        
+        #changes the adduct to M-H
+        data.base.full[,2] <- "M-H"
+      
+      }
+      
+    }
 
     #stores the 3rd column (mz) as its own vector
     data.base <- data.base.full[,3]
