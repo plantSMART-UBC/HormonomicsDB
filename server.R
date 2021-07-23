@@ -33,15 +33,14 @@ colnames(comp.classes) <- c("Name", "Class")
 library(rjson)
 
 
-#read in json file from directory
-jsonCOUNTER <- fromJSON(file = "counter.json")
+#read in csv file from directory
+dfm <- data.frame(read.csv("counterCSV.csv"))
 
 #convert to dataframe
 #reads in current count
 #tool must be used (below) to make the counter increase
 #actual data upload
-jsonDF <- as.data.frame(jsonCOUNTER)
-timesUsed <- jsonDF[1,1]
+timesUsed <- dfm[1,2]
 
 ##server
 
@@ -210,14 +209,24 @@ server <- function(input, output) {
     ##only counts when the tool has actually been used!!
     
     #adds single digit when run
-    jsonDF[1,1] <- jsonDF[1,1] + 1
-    rvals$timesUsed <- jsonDF[1,1]
+    dfm[,2] <- dfm[,2] + 1
     
-    #convert back to JSON file
-    jsonNewCount <- toJSON(jsonDF)
+    #saves as a variable that is read by the program
+    rvals$timesUsed <- dfm[1,2]
     
-    #writes as JSON
-    write(jsonNewCount, "counter.json")
+    #saves the column with new number
+    counterDF <- dfm[,2]
+    
+    #creating a blank matrix
+    emptyMatrix <- c()
+    
+    #overwriting matrix with blank one
+    write.csv(emptyMatrix,
+              "counterCSV.csv")
+    
+    #saves counter number to the server as a .csv
+    write.csv(counterDF,
+              "counterCSV.csv")
     
   })
   
@@ -422,19 +431,25 @@ server <- function(input, output) {
       rvals$custom.results.appended <- custom.results
     }
     
-    ##json stuff for counting times data is user upload
-    ##through the front end of the custon queue tool
-    ##only counts when the tool has actually been used!!
-    
     #adds single digit when run
-    jsonDF[1,1] <- jsonDF[1,1] + 1
-    rvals$timesUsed <- jsonDF[1,1]
+    dfm[,2] <- dfm[,2] + 1
     
-    #convert back to JSON file
-    jsonNewCount <- toJSON(jsonDF)
+    #saves as a variable that is read by the program
+    rvals$timesUsed <- dfm[1,2]
     
-    #writes as JSON
-    write(jsonNewCount, "counter.json")
+    #saves the column with new number
+    counterDF <- dfm[,2]
+    
+    #creating a blank matrix
+    emptyMatrix <- c()
+    
+    #overwriting matrix with blank one
+    write.csv(emptyMatrix,
+              "counterCSV.csv")
+    
+    #saves counter number to the server as a .csv
+    write.csv(counterDF,
+              "counterCSV.csv")
     
   })
   
