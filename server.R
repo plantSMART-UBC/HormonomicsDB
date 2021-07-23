@@ -29,9 +29,7 @@ comp.classes <- data.frame(comp.classes)
 colnames(comp.classes) <- c("Name", "Class")
 
 #####
-#json stuff here to count how many times the script has been run
-library(rjson)
-
+#stuff here to count how many times the script has been run
 
 #read in csv file from directory
 dfm <- data.frame(read.csv("counterCSV.csv"))
