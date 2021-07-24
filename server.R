@@ -1,6 +1,8 @@
 ##before server stuff
 ##Runs dependencies required to run the application
 
+library(shiny)
+
 HORMONOMICSDBV11_adducts <- read.csv("adducts.csv") #read in the melted data
 hormcsv_adducts <- data.frame(HORMONOMICSDBV11_adducts) #change name and format
 colnames(hormcsv_adducts) <- c("Names", "Adduct", "mz") #gives all the column names the same names
@@ -31,14 +33,14 @@ colnames(comp.classes) <- c("Name", "Class")
 #####
 #stuff here to count how many times the script has been run
 
-#read in csv file from directory
-dfm <- data.frame(read.csv("counterCSV.csv"))
-
-#convert to dataframe
-#reads in current count
-#tool must be used (below) to make the counter increase
-#actual data upload
-timesUsed <- dfm[1,2]
+# #read in csv file from directory
+# dfm <- data.frame(read.csv("counterCSV.csv"))
+# 
+# #convert to dataframe
+# #reads in current count
+# #tool must be used (below) to make the counter increase
+# #actual data upload
+# timesUsed <- dfm[1,2]
 
 ##server
 
@@ -144,9 +146,9 @@ server <- function(input, output) {
     } else if (input$ionMode == 2) {
       
       #if ESI- is selected by the user 
-      #remove 1.00727 m/z which is mass 
+      #remove 2.01505 m/z which is mass 
       #of H less an extra electron
-      data.base.full[,3] <- data.base.full[,3] - 1.00727
+      data.base.full[,3] <- data.base.full[,3] - 2.01505
       
       if (input$dataset == 2) {
         
@@ -206,25 +208,25 @@ server <- function(input, output) {
     ##through the front end of the main tool
     ##only counts when the tool has actually been used!!
     
-    #adds single digit when run
-    dfm[,2] <- dfm[,2] + 1
-    
-    #saves as a variable that is read by the program
-    rvals$timesUsed <- dfm[1,2]
-    
-    #saves the column with new number
-    counterDF <- dfm[,2]
-    
-    #creating a blank matrix
-    emptyMatrix <- c()
-    
-    #overwriting matrix with blank one
-    write.csv(emptyMatrix,
-              "counterCSV.csv")
-    
-    #saves counter number to the server as a .csv
-    write.csv(counterDF,
-              "counterCSV.csv")
+    # #adds single digit when run
+    # dfm[,2] <- dfm[,2] + 1
+    # 
+    # #saves as a variable that is read by the program
+    # rvals$timesUsed <- dfm[1,2]
+    # 
+    # #saves the column with new number
+    # counterDF <- dfm[,2]
+    # 
+    # #creating a blank matrix
+    # emptyMatrix <- c()
+    # 
+    # #overwriting matrix with blank one
+    # write.csv(emptyMatrix,
+    #           "counterCSV.csv")
+    # 
+    # #saves counter number to the server as a .csv
+    # write.csv(counterDF,
+    #           "counterCSV.csv")
     
   })
   
@@ -429,25 +431,25 @@ server <- function(input, output) {
       rvals$custom.results.appended <- custom.results
     }
     
-    #adds single digit when run
-    dfm[,2] <- dfm[,2] + 1
-    
-    #saves as a variable that is read by the program
-    rvals$timesUsed <- dfm[1,2]
-    
-    #saves the column with new number
-    counterDF <- dfm[,2]
-    
-    #creating a blank matrix
-    emptyMatrix <- c()
-    
-    #overwriting matrix with blank one
-    write.csv(emptyMatrix,
-              "counterCSV.csv")
-    
-    #saves counter number to the server as a .csv
-    write.csv(counterDF,
-              "counterCSV.csv")
+    # #adds single digit when run
+    # dfm[,2] <- dfm[,2] + 1
+    # 
+    # #saves as a variable that is read by the program
+    # rvals$timesUsed <- dfm[1,2]
+    # 
+    # #saves the column with new number
+    # counterDF <- dfm[,2]
+    # 
+    # #creating a blank matrix
+    # emptyMatrix <- c()
+    # 
+    # #overwriting matrix with blank one
+    # write.csv(emptyMatrix,
+    #           "counterCSV.csv")
+    # 
+    # #saves counter number to the server as a .csv
+    # write.csv(counterDF,
+    #           "counterCSV.csv")
     
   })
   
@@ -554,13 +556,13 @@ server <- function(input, output) {
     }
   )
   
-  
-  output$timesRUN <- renderText({
-    
-    #prints the number of times the app has been used succesfully
-    
-    paste("The app has been run ", timesUsed, " times.")
-    
-  })
+  # 
+  # output$timesRUN <- renderText({
+  #   
+  #   #prints the number of times the app has been used succesfully
+  #   
+  #   paste("The app has been run ", timesUsed, " times.")
+  #   
+  # })
   
 }
