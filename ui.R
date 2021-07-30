@@ -1,4 +1,4 @@
-#hormonomicsDB v1.4.1
+#hormonomicsDB v1.4.2
 #July 21st 2021
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
@@ -16,7 +16,7 @@ ui <- fluidPage(
 
   sidebarLayout(
     sidebarPanel(
-      strong("HormonomicsDB v1.4.1"),
+      strong("HormonomicsDB v1.4.2"),
       br(),
       p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
       p("The University of British Columbia"),
@@ -36,7 +36,7 @@ ui <- fluidPage(
                            strong("Instructions"),
                            #edit this text to change the instructions
                            p("Use either the 'm/z screener' which searches against our hormonomics datasets or select the
-                            'HormonomicsDB shell' to upload your own dataset use our platform to perform your
+                            'Custom Database Search' to upload your own dataset use our platform to perform your
                             own custom queries of your untargeted metabolomics data. View your output results in the tab
                             next to the tool you used then download your results as a .csv file."),
                            br(),
@@ -108,7 +108,7 @@ ui <- fluidPage(
                            br(),
                            tableOutput('contents')),
 
-                  tabPanel("HormonomicsDB Shell",
+                  tabPanel("Custom Database Search",
                            br(),
                            strong("Instructions: "),
                            p("Upload your custom dataset to search from then upload your experimental data and allow the tool to run, please allow
@@ -136,7 +136,7 @@ ui <- fluidPage(
                            tags$hr(),
                   ),
 
-                  tabPanel("Shell Output",
+                  tabPanel("Custom Database Output",
                            br(),
                            tableOutput('contents_shell'),
                            ))
