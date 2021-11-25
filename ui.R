@@ -7,6 +7,7 @@
 
 #call shiny library in
 library(shiny)
+library(DT)
 
 #####
 
@@ -139,6 +140,11 @@ ui <- fluidPage(
                   tabPanel("Custom Database Output",
                            br(),
                            tableOutput('contents_shell'),
+                           ),
+       
+                  tabPanel("Complete DB",
+                           br(),
+                           DT::dataTableOutput("wholeDB")
                            ))
     )
   )

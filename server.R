@@ -2,6 +2,7 @@
 ##Runs dependencies required to run the application
 
 library(shiny)
+library(DT)
 
 HORMONOMICSDBV11_adducts <- read.csv("adducts.csv") #read in the melted data
 hormcsv_adducts <- data.frame(HORMONOMICSDBV11_adducts) #change name and format
@@ -29,6 +30,10 @@ PRTs <- data.frame(PRTs)
 comp.classes <- read.csv("comp_classes.csv")
 comp.classes <- data.frame(comp.classes)
 colnames(comp.classes) <- c("Name", "Class")
+
+#read in the entire database for displaying 
+allCompsDB = read.csv("all_comps_db.csv")
+colnames(allCompsDB) = c("Compound Name", "Class", "Formula", "PRT", "Monoisotopic", "M+H")
 
 #####
 #stuff here to count how many times the script has been run
@@ -557,12 +562,11 @@ server <- function(input, output) {
   )
   
   # 
-  # output$timesRUN <- renderText({
-  #   
-  #   #prints the number of times the app has been used succesfully
-  #   
-  #   paste("The app has been run ", timesUsed, " times.")
-  #   
-  # })
+  output$wholeDB = DT::renderDataTable({
+    
+    #display whole DB
+    allCompsDB
+    
+  })
   
 }

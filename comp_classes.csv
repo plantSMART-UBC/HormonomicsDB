@@ -137,7 +137,14 @@ MEL-Tyr,Mel Conjugates
 MEL-Val,Mel Conjugates
 N-coumaroylMEL,Mel Conjugates
 sinapoylMEL,Mel Conjugates
-Mitragynine,Alkaloids
+Cadaverine,Polyamines
+caldohexamine,Polyamines
+caldopentamine,Polyamines
+Putrescine,Polyamines
+Spermidine,Polyamines
+Spermine,Polyamines
+tetrakis(3-aminopropyl) ammonium,Polyamines
+tris(3-aminopropyl) amine,Polyamines
 Salicyclic acid,SA
 5-deoxystrigol,strigolactones
 orobanchol,strigolactones
@@ -145,6 +152,12 @@ orobanchyl acetate,strigolactones
 sorgolactone,strigolactones
 strigol,strigolactones
 strigyl acetate,strigolactones
+Aminomethylphosphonic Acid,Synthetic
+Glyphosate,Synthetic
+Thidiazuron (dimer),Synthetic
+Thidiazuron (mono),Synthetic
+Thidiazuron (tetramer),Synthetic
+Thidiazuron (trimer),Synthetic
 "2,3-dihydroxyindole",Trp Metabolism
 2-amino-3-carboxymuconic acid-semialdehyde,Trp Metabolism
 2-aminomuconate,Trp Metabolism
@@ -221,29 +234,3 @@ quinolinate,Trp Metabolism
 quinolinic acid,Trp Metabolism
 skatole,Trp Metabolism
 xanthurenate,Trp Metabolism
-Secologanin,Alkaloids
-Strictosidine,Alkaloids
-Glyphosate,Synthetic
-Aminomethylphosphonic Acid,Synthetic
-Thidiazuron (mono),Synthetic
-Thidiazuron (dimer),Synthetic
-Thidiazuron (trimer),Synthetic
-Thidiazuron (tetramer),Synthetic
-camptothecin,Alkaloids
-Reserpine,Alkaloids
-Lysergic Acid,Alkaloids
-Ibogaine,Alkaloids
-Ibogamine,Alkaloids
-Voacangine,Alkaloids
-Catharanthine,Alkaloids
-Yohimbine,Alkaloids
-"N,N-Dimethyltryptamine",Alkaloids
-Strictosamide,Alkaloids
-Putrescine,Polyamines
-Cadaverine,Polyamines
-Spermidine,Polyamines
-Spermine,Polyamines
-caldopentamine,Polyamines
-caldohexamine,Polyamines
-tris(3-aminopropyl) amine,Polyamines
-tetrakis(3-aminopropyl) ammonium,Polyamines
