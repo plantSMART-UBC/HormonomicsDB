@@ -1,250 +1,250 @@
-﻿names,variable,value
-7/9-hydroxy-ABA,Monoisotopic,281.1389
-Abscisic acd,Monoisotopic,264.136159
-dihydrophaseic acid,Monoisotopic,282.146724
-neophaseic acid,Monoisotopic,279.123249
-phaseic acid,Monoisotopic,280.131074
-Mitragynine,Monoisotopic,398.220557
-Secologanin,Monoisotopic,388.13695
-Strictosidine,Monoisotopic,530.22643
-camptothecin,Monoisotopic,348.11101
-Reserpine,Monoisotopic,608.27338
-Lysergic Acid,Monoisotopic,268.12118
-Ibogaine,Monoisotopic,312.22016
-Ibogamine,Monoisotopic,280.19395
-Voacangine,Monoisotopic,368.20999
-Catharanthine,Monoisotopic,336.18378
-Yohimbine,Monoisotopic,354.19434
-"N,N-Dimethyltryptamine",Monoisotopic,188.13135
-Strictosamide,Monoisotopic,498.20022
-2-oxo-indole-3-acetic acid,Monoisotopic,191.18336
-anthranilic acid,Monoisotopic,137.047678
-IAA alanine,Monoisotopic,246.100442
-IAA aspartate,Monoisotopic,450.127445
-IAA glutamate,Monoisotopic,464.143095
-IAA glycine,Monoisotopic,232.23528
-IAA leucine,Monoisotopic,288.147393
-IAA phenylalanine,Monoisotopic,322.131742
-IAA valine,Monoisotopic,289.118832
-indole-3-acetamide,Monoisotopic,524.269988
-indole-3-acetic acid,Monoisotopic,175.063329
-indole-3-acetonitrile,Monoisotopic,156.068748
-indole-3-butyric acid,Monoisotopic,203.094629
-24-epicastasterone,Monoisotopic,464.350175
-28-norcastasterone,Monoisotopic,450.334525
-brassinolide,Monoisotopic,480.345089
-castasterone,Monoisotopic,464.350175
-cinnamoyl serotonin,Monoisotopic,306.136828
-dolicholide,Monoisotopic,478.329439
-dolichosterone,Monoisotopic,462.334525
-homobrassinolide,Monoisotopic,494.360739
-homocastasterone,Monoisotopic,478.365825
-homodolicholide,Monoisotopic,492.345089
-homodolichosterone,Monoisotopic,476.350175
-norbrassinolide,Monoisotopic,466.329439
-teasterone,Monoisotopic,448.35526
-typhasterol,Monoisotopic,448.35526
-betalamic acid,Monoisotopic,211.048072
-cyclo-dopa,Monoisotopic,195.053158
-cyclo-dopa-5-O-glucoside,Monoisotopic,357.105981
-dopamine,Monoisotopic,153.078979
-dopaquinone,Monoisotopic,195.053158
-Epinephrine,Monoisotopic,183.089543
-levodopa,Monoisotopic,197.068808
-norepinephrine,Monoisotopic,169.073893
-tyramine,Monoisotopic,137.084064
-Tyrosine,Monoisotopic,181.073893
-octopamine ,Monoisotopic,153.07897
-2-methylthio-cis-zeatin,Monoisotopic,265.099732
+﻿Name,variable,Monoisotopic
+12-hydroxy-jasmonic acid,Monoisotopic,388.173332
+"2,3-dihydroxyindole",Monoisotopic,149.047678
+24-epicastasterone,Monoisotopic,464.350174
+28-norcastasterone,Monoisotopic,450.334524
+2-amino-3-carboxymuconic acid-semialdehyde,Monoisotopic,185.032422
+2-aminomuconate,Monoisotopic,157.037507
+2-Aminomuconic semialdehyde,Monoisotopic,141.042593
+2-aminophenol,Monoisotopic,109.052763
+2-formamino-benzoylacetate,Monoisotopic,207.053157
+2-formylamino-benzaldehyde,Monoisotopic,121.052763
+2-hydroxymelatonin,Monoisotopic,250.131742
+2-methylthio-cis-zeatin,Monoisotopic,265.099731
 2-methylthio-cis-zeatin riboside,Monoisotopic,397.14199
-2-methylthio-isopentenyladenine,Monoisotopic,249.104817
-2-methylthio-isopentenyladenosine,Monoisotopic,381.147077
-dihydrozeatin,Monoisotopic,221.12766
-dihydrozeatin riboside-O-glucoside,Monoisotopic,515.222745
-dihydrozeatin-(7/9)-glucoside,Monoisotopic,383.180484
-kinetin,Monoisotopic,215.08071
-kinetin-9-glucoside,Monoisotopic,377.133535
-kinetin-riboside,Monoisotopic,347.12297
-N6-benzyladenine,Monoisotopic,225.101445
-N6-benzyladenine riboside,Monoisotopic,357.143704
-N6-benzyladenine-(7/9)-glucoside,Monoisotopic,519.196529
-N6-isopentenyladenine,Monoisotopic,203.117095
-N6-isopentenyladenine-(7/9)-glucoside,Monoisotopic,365.169922
-N6-isopentenyladenosine,Monoisotopic,335.15935
-para/meta/ortho-topolin,Monoisotopic,241.09636
-para/meta/ortho-topolin riboside,Monoisotopic,373.138619
-para/meta/ortho-topolin-9-glucoside,Monoisotopic,419.144098
-zeatin,Monoisotopic,219.11201
-zeatin riboside,Monoisotopic,351.154269
-zeatin riboside-O-glucoside,Monoisotopic,513.207092
-zeatin-(7/9/O)-glucoside,Monoisotopic,381.164833
+2-methylthio-isopentenyladenine,Monoisotopic,249.104816
+2-methylthio-isopentenyladenosine,Monoisotopic,381.147075
+2-Oxoadipic acid,Monoisotopic,160.037173
+2-oxoindole-3-acetate,Monoisotopic,191.058243
+2-oxo-indole-3-acetic acid,Monoisotopic,191.058243
+3-Hydroxyanthranilic acid,Monoisotopic,153.042593
+3-hydroxy-butanoyl-CoA,Monoisotopic,853.151989
+3-hydroxykynurenine,Monoisotopic,224.079706
+3-indole glycol-aldehyde,Monoisotopic,175.063328
+3-methoxy-anthranilate,Monoisotopic,167.058243
+3-methyl-dioxy indole,Monoisotopic,163.063328
+3-methyl-indolepyruvate,Monoisotopic,217.073893
+3-oxo-2-(2-(Z)-pentenyl)cyclopentane-1-butyric acid,Monoisotopic,238.156894
+3-oxo-2-(2-(Z)-pentenyl)cyclopentane-1-hexanoic acid,Monoisotopic,266.188194
+"4-(2-amino-5-hydroxyphenyl)-2,4-dioxobutanoate",Monoisotopic,223.048072
+"4,6-dihydroxyquinoline",Monoisotopic,161.047678
+"4,8-dihydroxyquinoline",Monoisotopic,161.047678
+4-hydroxymelatonin,Monoisotopic,248.116092
+"5-(2'-carboxyethyl)-4,6-dihydroxypicolinate",Monoisotopic,227.042987
+"5-(2'-formylethyl)-4,6-dihydroxypicolinate",Monoisotopic,211.048072
+"5-(3'-carboxy-3'-oxopropenyl)-4,6-dihydroxypicolinate",Monoisotopic,253.022251
+"5-(3'-carboxy-3'-oxopropyl)-4,6-dihydroxypicolinate",Monoisotopic,255.037901
+5-deoxystrigol,Monoisotopic,330.146723
+5-hydroxy tryptophan,Monoisotopic,220.084792
+5-hydroxyindole-acetaldehyde,Monoisotopic,175.063328
+5-hydroxy-indoleacetate,Monoisotopic,191.058243
+5-hydroxyindole-acetylglycine,Monoisotopic,248.079706
+5-hydroxy-indolepyruvate,Monoisotopic,219.053157
+5-hydroxy-kynureamine,Monoisotopic,224.079706
+5-Hydroxykynurenine,Monoisotopic,224.079706
+5-hydroxy-N-formylkynurenine,Monoisotopic,252.074621
+5-Methoxy-1H-indole-3-carbaldehyde,Monoisotopic,175.063328
+5-methoxyindole-3 acetic acid,Monoisotopic,205.073893
+5-methoxy-indoleacetate,Monoisotopic,205.073893
+5-methoxytryptamine,Monoisotopic,190.110613
+5-methoxytryptamine,Monoisotopic,190.110613
+5-methoxytryptophol,Monoisotopic,191.094628
+6-hydroxy-kynurenate,Monoisotopic,205.037507
+6-hydroxymelatonin,Monoisotopic,248.116092
+"7,8-dihydroxykynurenate",Monoisotopic,221.032422
+"7,8-hidydro-7,8-dihydroxykynurenate",Monoisotopic,223.048072
+7-hydroxy-ABA,Monoisotopic,280.131073
+7-hydroxymelatonin,Monoisotopic,248.116092
+8-methoxy-kynurenate,Monoisotopic,219.053157
+"9,10-dihydrojasmonic acid",Monoisotopic,212.141244
+9-hydroxy-ABA,Monoisotopic,280.131073
+Abscisic acid (ABA),Monoisotopic,264.136159
+Acetoacetyl-CoA,Monoisotopic,851.136339
+Acetyl-CoA,Monoisotopic,809.125774
+Acetylindoxyl,Monoisotopic,175.063328
+Aminomethylphosphonic Acid,Monoisotopic,111.00853
+Aminomuconate,Monoisotopic,157.037507
+Aniline,Monoisotopic,93.057849
+Anthranilate,Monoisotopic,137.047678
+Anthranilic acid,Monoisotopic,137.047678
+Betalamic acid,Monoisotopic,211.048072
+Brassinolide,Monoisotopic,480.345089
+Bufotenine,Monoisotopic,204.126263
+Cadaverine,Monoisotopic,102.115698
+Caldohexamine,Monoisotopic,302.315795
+Caldopentamine,Monoisotopic,245.257946
+Castasterone,Monoisotopic,464.350174
+Cinnamoyl serotonin,Monoisotopic,306.136827
+Cinnavalininate,Monoisotopic,300.038235
+Cis-12-oxo-phytodienoic acid,Monoisotopic,292.203844
+Crotonyl-CoA,Monoisotopic,835.141425
+Cyclic (3)-hydroxymelatonin,Monoisotopic,248.116092
+Cyclic-melatonin,Monoisotopic,230.105527
+Cyclo-dopa,Monoisotopic,195.053157
+Cyclo-dopa-5-O-glucoside,Monoisotopic,357.105981
+Dihydrophaseic acid,Monoisotopic,282.146723
+Dihydrozeatin,Monoisotopic,221.12766
+Dihydrozeatin riboside-O-glucoside,Monoisotopic,515.222742
+Dihydrozeatin-glucoside,Monoisotopic,383.180483
+Dinor-12-oxo-phytodienoic acid,Monoisotopic,288.172544
+Dolichosterone,Monoisotopic,462.334524
+Dopamine,Monoisotopic,153.078978
+Dopaquinone,Monoisotopic,195.053157
+Epinephrine,Monoisotopic,183.089543
+Feruloyl serotonin,Monoisotopic,352.142307
+Formyl-5-hydroxy-kynureamine,Monoisotopic,208.084792
+Formylanthranilate,Monoisotopic,165.042593
+Formylkynurenine,Monoisotopic,236.079706
+Formyl-n-acetyl-5-methoxykynureamine,Monoisotopic,264.111007
+Gamma-oxalo-crotonate,Monoisotopic,158.021523
 Gibberellin A1,Monoisotopic,348.157288
 Gibberellin A15,Monoisotopic,344.198759
-Gibberellin A19,Monoisotopic,362.172939
-Gibberellin A24,Monoisotopic,346.178024
+Gibberellin A19,Monoisotopic,362.172938
+Gibberellin A24,Monoisotopic,346.178023
 Gibberellin A29,Monoisotopic,348.157288
-Gibberellin A3,Monoisotopic,346.141638
+Gibberellin A3 (GA3),Monoisotopic,346.141638
 Gibberellin A34,Monoisotopic,348.157288
-Gibberellin A4,Monoisotopic,332.162374
-Gibberellin A44,Monoisotopic,346.178024
-Gibberellin A5,Monoisotopic,330.146724
-Gibberellin A51,Monoisotopic,332.162374
+Gibberellin A4,Monoisotopic,332.162373
+Gibberellin A44,Monoisotopic,346.178023
+Gibberellin A5,Monoisotopic,330.146723
+Gibberellin A51,Monoisotopic,332.162373
 Gibberellin A53,Monoisotopic,348.193674
 Gibberellin A6,Monoisotopic,346.141638
 Gibberellin A8,Monoisotopic,364.152203
-(2/4/6/7)-hydroxymelatonin,Monoisotopic,248.116089
-5-Methoxy-1H-indole-3-carbaldehyde,Monoisotopic,175.063329
-5-methoxyindole-3 acetic acid,Monoisotopic,205.073893
-5-methoxytryptamine; O-methylserotonin,Monoisotopic,190.110613
-5-methoxytryptophol,Monoisotopic,191.094628
-bufotenine,Monoisotopic,204.126263
-cyclic (3)-hydroxymelatonin,Monoisotopic,246.100442
-cyclic-melatonin,Monoisotopic,230.105527
-feruloyl serotonin,Monoisotopic,352.142307
-kynuramine,Monoisotopic,164.094963
-melatonin,Monoisotopic,232.121178
-N1-acetyl-5-methoxykynuramine,Monoisotopic,236.116092
-N6-N2-formyl-5-methoxykynuramine,Monoisotopic,264.111007
-serotonin,Monoisotopic,176.094963
-tryptamine,Monoisotopic,160.100048
-tryptophan,Monoisotopic,204.089878
-12-hydroxy-jasmonic acid,Monoisotopic,388.173332
-3-oxo-2-(2-(Z)-pentenyl)cyclopentane-1-butyric acid,Monoisotopic,238.156895
-3-oxo-2-(2-(Z)-pentenyl)cyclopentane-1-hexanoic acid,Monoisotopic,266.188195
-"9,10-dihydrojasmonic acid",Monoisotopic,212.141244
-cis-12-oxo-phytodienoic acid,Monoisotopic,292.203845
-dinor-12-oxo-phytodienoic acid,Monoisotopic,264.172747
+Glucobrassicin,Monoisotopic,448.061022
+Glutaryl CoA,Monoisotopic,881.146904
+Glyphosate,Monoisotopic,169.014009
+Homobrassinolide,Monoisotopic,494.360739
+Homocastasterone,Monoisotopic,478.365824
+Homodolicholide,Monoisotopic,492.345089
+Homodolichosterone,Monoisotopic,476.350174
+Hydroxymelatonin,Monoisotopic,248.116092
+IAA alanine,Monoisotopic,246.100442
+IAA aspartate,Monoisotopic,450.127444
+IAA glutamate,Monoisotopic,464.143094
+IAA glycine,Monoisotopic,232.084792
+IAA leucine,Monoisotopic,288.147392
+IAA phenylalanine,Monoisotopic,322.131742
+IAA valine,Monoisotopic,289.118832
+Indol-3-yl-lactate,Monoisotopic,205.073893
+Indole,Monoisotopic,117.057849
+Indole-3-acetaldehyde,Monoisotopic,159.068413
+Indole-3-acetaldoxime,Monoisotopic,174.079312
+Indole-3-acetamide,Monoisotopic,174.079312
+Indole-3-acetic acid (IAA),Monoisotopic,175.063328
+Indole-3-acetonitrile,Monoisotopic,156.068748
+Indole-3-butyric acid (IBA),Monoisotopic,203.094628
+Indole-3-ethanol,Monoisotopic,161.084063
+Indole-3-thiohydroximate,Monoisotopic,206.051384
+Indolepyruvate,Monoisotopic,203.058243
+Indolylmethyldesulfoglucosinolate,Monoisotopic,368.104207
+Indoxyl,Monoisotopic,133.052763
+Isophenoxazine,Monoisotopic,212.058577
 JA-isoleucine,Monoisotopic,322.201833
-JA-pheylalanine,Monoisotopic,360.181099
-jasmonic acid,Monoisotopic,210.125594
-JA-tryptophan,Monoisotopic,399.191998
-JA-valine,Monoisotopic,312.181099
-KAR1,Monoisotopic,150.03169
-KAR11,Monoisotopic,172.0372
-KAR2,Monoisotopic,136.016
-KAR3,Monoisotopic,164.0473
-KAR4,Monoisotopic,164.0473
-KAR5,Monoisotopic,150.0317
-KAR6,Monoisotopic,150.0317
-caffeoylMEL,Monoisotopic,394.152872
-cinnamoylMEL,Monoisotopic,362.163043
-feruloylMEL,Monoisotopic,408.168522
-MEL-Ala,Monoisotopic,285.142888
-MEL-Arg,Monoisotopic,370.206888
-MEL-Asn,Monoisotopic,328.148708
-MEL-Asp,Monoisotopic,329.132718
-MEL-Cys,Monoisotopic,317.114968
-MEL-Gln,Monoisotopic,342.164358
-MEL-Glu,Monoisotopic,343.148368
-MEL-Gly,Monoisotopic,271.127238
-MEL-His,Monoisotopic,351.164688
-MEL-Ile,Monoisotopic,327.189838
-MEL-Leu,Monoisotopic,327.189838
-MEL-Lys,Monoisotopic,342.200738
-MEL-Met,Monoisotopic,345.146268
-MEL-Phe,Monoisotopic,361.174188
-MEL-Pro,Monoisotopic,311.158538
-MEL-Ser,Monoisotopic,301.137808
-MEL-Thr,Monoisotopic,315.153458
-MEL-Trp,Monoisotopic,400.185088
-MEL-Tyr,Monoisotopic,377.169108
-MEL-Val,Monoisotopic,313.174188
-N-coumaroylMEL,Monoisotopic,378.157957
-sinapoylMEL,Monoisotopic,438.179087
+JA-pheylalanine,Monoisotopic,360.181097
+Jasmonic acid (JA),Monoisotopic,210.125594
+JA-tryptophan,Monoisotopic,399.191996
+JA-valine,Monoisotopic,312.181097
+Karrikin 11,Monoisotopic,150.031694
+Karrikin 11,Monoisotopic,172.037173
+Karrikin 2,Monoisotopic,136.016043
+Karrikin 3,Monoisotopic,164.047344
+Karrikin 4,Monoisotopic,180.042258
+Karrikin 5,Monoisotopic,150.031694
+Karrikin 6,Monoisotopic,166.026608
+Kinetin (KIN),Monoisotopic,215.080709
+Kinetin-9-glucoside,Monoisotopic,377.133533
+Kinetin-riboside,Monoisotopic,347.122968
+Kynuramine,Monoisotopic,164.094963
+Kynurenate,Monoisotopic,189.042593
+Kynurenine,Monoisotopic,208.084792
+Levodopa,Monoisotopic,197.068807
+MEL-Ala,Monoisotopic,303.158291
+MEL-Arg,Monoisotopic,396.284889
+MEL-Asn,Monoisotopic,346.164105
+MEL-Asp,Monoisotopic,347.14812
+Melatonin (MEL),Monoisotopic,232.121177
+MEL-Cys,Monoisotopic,335.130362
+MEL-Gln,Monoisotopic,360.179755
+MEL-Glu,Monoisotopic,361.16377
+MEL-Gly,Monoisotopic,289.142641
+MEL-His,Monoisotopic,369.180089
+MEL-Ile,Monoisotopic,345.205241
+MEL-Leu,Monoisotopic,345.205241
+MEL-Lys,Monoisotopic,360.21614
+MEL-Met,Monoisotopic,363.161662
+MEL-Phe,Monoisotopic,379.189591
+MEL-Pro,Monoisotopic,329.173941
+MEL-Ser,Monoisotopic,310.08278
+MEL-Thr,Monoisotopic,333.168856
+MEL-Trp,Monoisotopic,418.20049
+MEL-Tyr,Monoisotopic,395.184506
+MEL-Val,Monoisotopic,331.189591
+Meta-topolin,Monoisotopic,241.096359
+Meta-topolin riboside,Monoisotopic,405.128447
+Meta-topolin-9-glucoside,Monoisotopic,419.144098
+N6-benzyladenine,Monoisotopic,225.101445
+N6-benzyladenine riboside,Monoisotopic,225.101445
+"N6-benzyladenine-7,9-diglucoside",Monoisotopic,551.222742
+N6-benzyladenine-7-glucoside,Monoisotopic,387.154268
+N6-benzyladenine-9-glucoside,Monoisotopic,389.169918
+N6-isopentenyladenine,Monoisotopic,519.196527
+N6-isopentenyladenine-7-glucoside,Monoisotopic,219.11201
+N6-isopentenyladenosine,Monoisotopic,365.169918
+N6-N2-formyl-5-methoxykynuramine,Monoisotopic,415.125685
+N-acetylisatin,Monoisotopic,189.042593
+N-Acetylserotonin,Monoisotopic,218.105527
+N-caffeoyl Melatonin,Monoisotopic,394.152871
+N-cinnamoyl Melatonin,Monoisotopic,362.163042
+N-coumaroyl Melatonin,Monoisotopic,378.157957
+Neophaseic acid,Monoisotopic,280.131073
+N-feruloyl Melatonin,Monoisotopic,408.168521
+N-hydroxy-tryptamine,Monoisotopic,279.123248
+Nicotinic acid mononucleotide,Monoisotopic,335.040618
+N-methylserotonin,Monoisotopic,190.110613
+N-methyltryptamine,Monoisotopic,174.115698
+Norbrassinolide,Monoisotopic,466.329439
+Norepinephrine,Monoisotopic,169.073893
+N-sinapoyl Melatonin,Monoisotopic,438.179086
+Octopamine ,Monoisotopic,153.078978
+olicholide,Monoisotopic,478.329439
+Orobanchol,Monoisotopic,346.141638
+Orobanchyl acetate,Monoisotopic,388.152203
+Ortho-topolin,Monoisotopic,241.096359
+Ortho-topolin riboside,Monoisotopic,389.133533
+Ortho-tropolin-9-glucoside,Monoisotopic,435.139012
+Para-topolin riboside,Monoisotopic,373.138618
+Para-tropolin,Monoisotopic,241.096359
+Para-tropolin-9-glucoside,Monoisotopic,451.133927
+Phaseic acid,Monoisotopic,280.131073
+Picolinate,Monoisotopic,123.032028
 Putrescine,Monoisotopic,88.100048
-Cadaverine,Monoisotopic,102.115698
-Spermidine,Monoisotopic,145.157898
-Spermine,Monoisotopic,202.215747
-caldopentamine,Monoisotopic,245.257946
-caldohexamine,Monoisotopic,302.315795
-tris(3-aminopropyl) amine,Monoisotopic,188.200097
-tetrakis(3-aminopropyl) ammonium,Monoisotopic,246.265771
+Quinolinate,Monoisotopic,167.021857
+Quinolinic acid,Monoisotopic,167.021857
 Salicyclic acid,Monoisotopic,138.031694
-5-deoxystrigol,Monoisotopic,330.1467
-orobanchol,Monoisotopic,346.1416
-orobanchyl acetate,Monoisotopic,388.1522
-sorgolactone,Monoisotopic,316.1311
-strigol,Monoisotopic,346.1416
-strigyl acetate,Monoisotopic,388.1522
-Glyphosate,Monoisotopic,169.01401
-Aminomethylphosphonic Acid,Monoisotopic,111.00853
-Thidiazuron,Monoisotopic,220.04188
-Thidiazuron (dimer),Monoisotopic,440.08376
-Thidiazuron (trimer),Monoisotopic,660.12564
-Thidiazuron (tetramer),Monoisotopic,880.16752
-"2,3-dihydroxyindole",Monoisotopic,149.0477
-2-amino-3-carboxymuconic acid-semialdehyde,Monoisotopic,185.032425
-2-aminomuconate,Monoisotopic,157.0375
-2-Aminomuconic semialdehyde,Monoisotopic,141.042593
-2-aminophenol,Monoisotopic,109.0528
-2-formamino-benzoylacetate,Monoisotopic,207.0532
-2-formylamino-benzaldehyde,Monoisotopic,149.0477
-2-oxoadipate,Monoisotopic,160.0372
-2-oxoindole-3-acetate,Monoisotopic,191.0582
-3/5-hydroxykynurenine,Monoisotopic,224.079712
-3-hydroxyanthranilate,Monoisotopic,152.035324
-3-hydroxy-butanoyl-coa,Monoisotopic,853.152
-3-hydroxykynuramine,Monoisotopic,180.0899
-3-indoleglycol-aldehyde,Monoisotopic,175.0633
-3-methoxy-anthranilate,Monoisotopic,167.0582
-3-methyl-dioxyindole,Monoisotopic,163.0633
-3-methyl-indolepyruvate,Monoisotopic,217.079
-"4-(2-amino-5-hydroxyphenyl)-2,4-dioxobutanoate",Monoisotopic,223.0481
-"4,6-dihydroxyquinoline",Monoisotopic,161.0477
-"4,8-dihydroxyquinoline",Monoisotopic,161.0477
-"5-(2'-carboxyethyl)-4,6-dihydroxypicolinate",Monoisotopic,227.043
-"5-(2'-formylethyl)-4,6-dihydroxypicolinate",Monoisotopic,211.0481
-"5-(3'-carboxy-3'-oxopropenyl)-4,6-dihydroxypicolinate",Monoisotopic,253.0223
-"5-(3'-carboxy-3'-oxopropyl)-4,6-dihydroxypicolinate",Monoisotopic,255.0379
-5-HTP,Monoisotopic,220.084793
-5-hydroxyindole-acetaldehyde,Monoisotopic,175.0633
-5-hydroxy-indoleacetate,Monoisotopic,191.0582
-5-hydroxyindole-acetylglycine,Monoisotopic,248.0797
-5-hydroxy-indolepyruvate,Monoisotopic,219.0532
-5-hydroxy-kynureamine,Monoisotopic,180.0899
-5-hydroxy-N-formylkynurenine,Monoisotopic,252.0746
-5-methoxy-indoleacetate,Monoisotopic,205.0739
-5-methoxytryptamine,Monoisotopic,190.1106
-6-hydroxy-kynurenate,Monoisotopic,205.0375
-"7,8-dihydroxykynurenate",Monoisotopic,221.0324
-"7,8-hidydro-7,8-dihydroxykynurenate",Monoisotopic,223.0481
-8-methoxy-kynurenate,Monoisotopic,219.0532
-acetoacetyl coa,Monoisotopic,851.1363
-acetyl coa,Monoisotopic,809.1258
-acetylindoxyl,Monoisotopic,175.0633
-aminomuconate,Monoisotopic,156.029683
-aniline,Monoisotopic,93.057846
-anthranilate,Monoisotopic,136.040405
-cinnavalininate,Monoisotopic,300.0382
-crotonyl-coA,Monoisotopic,835.1414
-formyl-5-hydroxy-kynureamine,Monoisotopic,208.0848
-formylanthranilate,Monoisotopic,164.034768
-formylkynurenine,Monoisotopic,236.079712
-formyl-n-acetyl-5-methoxykynureamine,Monoisotopic,264.111
-gamma-oxalo-crotonate,Monoisotopic,158.0215
-glucobrassicin,Monoisotopic,448.061
-glutaryl CoA,Monoisotopic,881.1469
-hydroxymelatonin,Monoisotopic,248.1161
-indol-3-yl-lactate,Monoisotopic,205.0739
-indole,Monoisotopic,117.0578
-indole-3-acetaldehyde,Monoisotopic,159.0684
-indole-3-acetaldoxime,Monoisotopic,174.0793
-indole-3-ethanol,Monoisotopic,161.0841
-indole-3-thiohydroximate,Monoisotopic,206.0514
-indolepyruvate,Monoisotopic,203.0582
-indolylmethyldesulfoglucosinolate,Monoisotopic,368.1042
-indoxyl,Monoisotopic,133.0528
-isophenoxazine,Monoisotopic,212.0586
-kynurenate,Monoisotopic,189.0426
-kynurenine,Monoisotopic,208.084793
-N-acetylisatin,Monoisotopic,189.0426
-n-acetylserotonin,Monoisotopic,218.1055
-n-hydroxy-tryptamine,Monoisotopic,176.095
-nicotinic acid mononucleotide,Monoisotopic,336.047882
-n-methylserotonin,Monoisotopic,190.1106
-N-methyltryptamine,Monoisotopic,174.1157
-picolinate,Monoisotopic,123.032028
-quinolinate,Monoisotopic,172.040405
-quinolinic acid,Monoisotopic,167.021858
-skatole,Monoisotopic,131.0735
-xanthurenate,Monoisotopic,205.0375
+Serotonin (5HT),Monoisotopic,176.094963
+Skatole,Monoisotopic,131.073499
+Sorgolactone,Monoisotopic,316.131073
+Spermidine,Monoisotopic,145.157897
+Spermine,Monoisotopic,202.215746
+Strigol,Monoisotopic,346.141638
+Strigyl acetate,Monoisotopic,388.152203
+Teasterone,Monoisotopic,448.35526
+Tetrakis(3-aminopropyl) ammonium,Monoisotopic,246.265771
+Thidiazuron,Monoisotopic,220.041882
+Thidiazuron (dimer),Monoisotopic,440.083764
+Thidiazuron (tetramer),Monoisotopic,880.167528
+Thidiazuron (trimer),Monoisotopic,660.125646
+Tris(3-aminopropyl) amine,Monoisotopic,188.200096
+Tryptamine,Monoisotopic,160.100048
+Tryptophan,Monoisotopic,204.089877
+Typhasterol,Monoisotopic,448.35526
+Tyramine,Monoisotopic,137.084063
+Tyrosine,Monoisotopic,181.073893
+Xanthurenate,Monoisotopic,205.037507
+Zeatin,Monoisotopic,219.11201
+Zeatin riboside,Monoisotopic,351.154268
+Zeatin riboside-O-glucoside,Monoisotopic,513.207092
+Zeatin-7-glucoside,Monoisotopic,383.180483
+Zeatin-9-glucoside,Monoisotopic,381.164833
+Zeatin-O-glucoside,Monoisotopic,381.164833
