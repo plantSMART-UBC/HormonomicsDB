@@ -279,8 +279,13 @@ server <- function(input, output) {
     #convert last line to a percentage
     percent.delta.rt <- 100-(delta.rt/results.rt[,5])*100
     
+    #compute ppm mass error (don't think people will want to sort by ppm?)
+    ppmError <- ((results.rt[,3] - results.rt[,4])/results.rt[,3])*10^6
+    
     #add the percent in RT to the data
     results.for.download <- cbind(results.rt, percent.delta.rt)
+    
+    #results.for.download <- cbind(results.for.download, ppmError)
     
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z",
                                         "Experimental m/z", "RT", "Predicted RT", "Percent Match RT")
