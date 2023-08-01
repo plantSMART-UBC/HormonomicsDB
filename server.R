@@ -279,9 +279,6 @@ server <- function(input, output) {
     #convert last line to a percentage
     percent.delta.rt <- 100-(delta.rt/results.rt[,5])*100
     
-    #compute ppm mass error (don't think people will want to sort by ppm?)
-    ppmError <- ((results.rt[,3] - results.rt[,4])/results.rt[,3])*10^6
-    
     #add the percent in RT to the data
     results.for.download <- cbind(results.rt, percent.delta.rt)
     
@@ -379,11 +376,19 @@ server <- function(input, output) {
     #reorders to bring class into the mix
     results.for.display <- results.for.display[, c(1, 9, 2, 3, 4, 5, 6, 7, 8)]
     
+    #compute ppm mass error (don't think people will want to sort by ppm?)
+    ppmError <- ((results.for.display[,4] - results.for.display[,5])/results.for.display[,4])*10^6
+    
+    results.for.display <- cbind(results.for.display, ppmError)
+    
+    colnames(results.for.display) <- c("Compound Name", "Class", "Adduct/BT", "Actual m/z", "Experimental m/z",
+                                       "RT", "Predicted RT", "Percent Match RT", "ppm", "ppm Mass Difference")
+    
     #displays the results we want in the GUI
-    results.for.display[,1:8]
+    results.for.display[,c(1:8,10)]
     
   },
-  digits = 4 #displays 4 decimal points
+  digits = 5 #displays 5 decimal points
   )
   
   output$downloadData <- downloadHandler(
