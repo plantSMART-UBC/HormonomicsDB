@@ -89,8 +89,15 @@ ui <- fluidPage(
                                                              "PGR Adducts (ESI + Only)" = 3,
                                                              "PGR Biotransformations" = 4),
                                               selected = 1),
-
-                  numericInput('tol', "Mass tolerance (+/- Da)", 0.02, min = 0, max = 1, step = 0.0001), #tolerance input
+                           
+                           #controls for using +/- Da or +/- ppm
+                           radioButtons("daOrPPM", "Select mass tolerance mode (Da or PPM): ",
+                                        choices = list("+/- Da" = 1,
+                                                       "+/- PPM" = 2),
+                                        selected = 1),
+                           
+                  numericInput('tol', "Mass tolerance (+/- Da or PPM)", 0.02, min = 0, max = 500, step = 0.0001), #tolerance input
+                  
                   fileInput('file1', 'Choose file to upload: ', #import csv button
                             accept = c(
                               'text/csv',
