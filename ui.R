@@ -91,7 +91,7 @@ ui <- fluidPage(
                                               selected = 1),
                            
                            #controls for using +/- Da or +/- ppm
-                           radioButtons("daOrPPM", "Select mass tolerance mode (Da or PPM): ",
+                           radioButtons("tolMode", "Select mass tolerance mode (Da or PPM): ",
                                         choices = list("+/- Da" = 1,
                                                        "+/- PPM" = 2),
                                         selected = 1),

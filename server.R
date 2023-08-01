@@ -175,14 +175,39 @@ server <- function(input, output) {
     marker.vect <- c()
     for (i in 1:length(rvals$expt.masses)){
       
-      marker <- which(rvals$expt.masses[i] >= data.base-input$tol & rvals$expt.masses[i] <= data.base+input$tol)
+      if (input$tolMode == 1){
       
-      if (length(marker[i]) > 0){
+        marker <- which(rvals$expt.masses[i] >= data.base-input$tol & rvals$expt.masses[i] <= data.base+input$tol)
+      
+        if (length(marker[i]) > 0){
         
         #converts to useable vector
         marker.vect[[i]] <- marker
         
+        }
       }
+      
+      else if (input$tolMode == 2){
+        
+        #vector for absolute ppm error to go in (will all be positive)
+        ppmAbsolute <- c()
+        ppmTol <- c()
+        
+        #calculate the error for each entry in the database
+        ppmAbsolute <- data.base*(1+input$tol/10^6) 
+        ppmTol <-  ppmAbsolute - data.base
+        
+        marker <- which(rvals$expt.masses[i] >= data.base-ppmTol & rvals$expt.masses[i] <= data.base+ppmTol)
+        
+        if (length(marker[i]) > 0){
+          
+          #converts to useable vector
+          marker.vect[[i]] <- marker
+          
+        }
+        
+      }
+      
     } #loop to find markers (where in expt dataset match occurs)
     exp.match <- c() # empty vector for position of experimental matches to go
     for (j in 1:length(marker.vect)){
