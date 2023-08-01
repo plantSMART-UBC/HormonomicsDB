@@ -93,7 +93,7 @@ ui <- fluidPage(
                            #controls for using +/- Da or +/- ppm
                            radioButtons("tolMode", "Select mass tolerance mode (Da or PPM): ",
                                         choices = list("+/- Da" = 1,
-                                                       "+/- PPM" = 2),
+                                                       "+/- ppm" = 2),
                                         selected = 1),
                            
                   numericInput('tol', "Mass tolerance (+/- Da or PPM)", 0.02, min = 0, max = 500, step = 0.0001), #tolerance input
@@ -127,7 +127,12 @@ ui <- fluidPage(
                                        '.csv'
                                      )
                            ),
-                           numericInput('tol2', "Mass tolerance (+/- Da)", 0.02, min = 0, max = 1, step = 0.0001), #slider bar input
+                           #controls for using +/- Da or +/- ppm
+                           radioButtons("tolMode2", "Select mass tolerance mode (Da or PPM): ",
+                                        choices = list("+/- Da" = 1,
+                                                       "+/- ppm" = 2),
+                                        selected = 1),
+                           numericInput('tol2', "Mass tolerance (+/- Da or ppm)", 0.02, min = 0, max = 1000, step = 0.0001), #slider bar input
                            fileInput('file2', 'Choose file to upload: ', #import csv button
                                      accept = c(
                                        'text/csv',
