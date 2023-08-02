@@ -502,26 +502,6 @@ server <- function(input, output) {
       rvals$custom.results.appended <- custom.results
     }
     
-    # #adds single digit when run
-    # dfm[,2] <- dfm[,2] + 1
-    # 
-    # #saves as a variable that is read by the program
-    # rvals$timesUsed <- dfm[1,2]
-    # 
-    # #saves the column with new number
-    # counterDF <- dfm[,2]
-    # 
-    # #creating a blank matrix
-    # emptyMatrix <- c()
-    # 
-    # #overwriting matrix with blank one
-    # write.csv(emptyMatrix,
-    #           "counterCSV.csv")
-    # 
-    # #saves counter number to the server as a .csv
-    # write.csv(counterDF,
-    #           "counterCSV.csv")
-    
   })
   
   output$contents_shell <- renderTable({
