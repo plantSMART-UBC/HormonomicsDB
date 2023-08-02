@@ -286,11 +286,11 @@ server <- function(input, output) {
     ppmErrorDownloads <- ((results.for.download[,3] - results.for.download[,4])/results.for.download[,3])*10^6 
     
     #add ppmErrorDownloads to the results.for.download
-    results.for.download <- cbind(results.for.download, ppmErrorDownloads)
+    #results.for.download <- cbind(results.for.download, ppmErrorDownloads)
 
     
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z",
-                                        "Experimental m/z", "RT", "Predicted RT", "Percent Match RT", "ppmError")
+                                        "Experimental m/z", "RT", "Predicted RT", "Percent Match RT")
     
     #concats the expt m/z and rt together
     results.for.download.mz.rt <- paste0(results.for.download[,4], "_",results.for.download[,5])
@@ -306,7 +306,7 @@ server <- function(input, output) {
                                   by.x = "Compound Name", by.y = "Name", all.x = TRUE)
     
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
-                                        "Experimental RT", "Predicted RT", "Percent Match RT","ppmError", "mzrt", "Class")
+                                        "Experimental RT", "Predicted RT", "Percent Match RT","mzrt", "Class")
     
     #loop to take UI input and sort the output data in the UI
     if (input$orderby == 1){
@@ -346,6 +346,8 @@ server <- function(input, output) {
     download.results <- merge(x = results.for.download, y = comp.classes,
                               by.x = "Compound Name", by.y = "Name", all.x = TRUE)
     
+    ppmVectCalc <- ((download.results[,3] - download.results[,4])/download.results[,3])*10^6
+    
     #pseudo-SQL left join
     download.results <- merge(x = results.for.download, y = experimental.intensities,
                               by.x = "mzrt", by.y = "mzrt1", all.x = TRUE)
@@ -364,10 +366,10 @@ server <- function(input, output) {
     
     #column names
     colnames(download.results) <- c("mz_rt", "Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
-                                    "RT", "Predicted RT", "Percent Match RT", "ppmError", "Class", sample.names)
+                                    "RT", "Predicted RT", "Percent Match RT", "Class", sample.names)
     
     #rearranges to bring compound class in
-    download.results <- download.results[,c(1,2,10,3,4,5,6,7,8,9:ncol(download.results))]
+    download.results <- download.results[,c(1,2,9,3,4,5,6,7,8:ncol(download.results))]
     
     #drops mz_rt
     download.results <- download.results[,2:ncol(download.results)]
@@ -376,7 +378,8 @@ server <- function(input, output) {
     download.results <- data.frame(download.results)
     
     #assign the data for download to a global variable so it can be downloaded within the GUI envrionment by the user
-    download.results <- download.results[,-10]
+    download.results <- download.results[,-9]
+    download.results <- cbind(download.results[, 1:(9 - 1)], ppmErrorDownloads, download.results[, 9:ncol(download.results)])
     rvals$download.noncustom <- download.results
     
     #reorders to bring class into the mix
