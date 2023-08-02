@@ -1,5 +1,5 @@
-#hormonomicsDB v1.4.2
-#July 21st 2021
+#hormonomicsDB v1.5(beta)
+#August 1st 2023
 #Authors: Ryland T. Giebelhaus, Lauren A.E. Erland, and Susan J. Murch
 #PlantSMART research group at UBC Okanagan
 #contact: Dr. Susan J. Murch. Email: susan.murch@ubc.ca
@@ -17,7 +17,7 @@ ui <- fluidPage(
 
   sidebarLayout(
     sidebarPanel(
-      strong("HormonomicsDB v1.4.2"),
+      strong("HormonomicsDB v1.5(beta)"),
       br(),
       p("Developed by: Ryland T. Giebelhaus, Lauren A.E. Erland, Susan J. Murch"),
       p("The University of British Columbia"),
@@ -60,7 +60,7 @@ ui <- fluidPage(
                              makes in data processing. Considering this, please inform us immediately of any bugs that you encounter."),
                            p("We do not save any data that is uploaded to the server, it is
                              immediately deleted with every new session that you start."),
-                           p("Please cite the github repository for this project when using HormonomicsDB in
+                           p("Please cite Giebelhaus et al. (https://doi.org/10.12688/f1000research.124194.1) when using HormonomicsDB in
                              any work."),
                            tags$hr(),),
 
