@@ -175,14 +175,39 @@ server <- function(input, output) {
     marker.vect <- c()
     for (i in 1:length(rvals$expt.masses)){
       
-      marker <- which(rvals$expt.masses[i] >= data.base-input$tol & rvals$expt.masses[i] <= data.base+input$tol)
+      if (input$tolMode == 1){
       
-      if (length(marker[i]) > 0){
+        marker <- which(rvals$expt.masses[i] >= data.base-input$tol & rvals$expt.masses[i] <= data.base+input$tol)
+      
+        if (length(marker[i]) > 0){
         
         #converts to useable vector
         marker.vect[[i]] <- marker
         
+        }
       }
+      
+      else if (input$tolMode == 2){
+        
+        #vector for absolute ppm error to go in (will all be positive)
+        ppmAbsolute <- c()
+        ppmTol <- c()
+        
+        #calculate the error for each entry in the database
+        ppmAbsolute <- data.base*(1+input$tol/10^6) 
+        ppmTol <-  ppmAbsolute - data.base
+        
+        marker <- which(rvals$expt.masses[i] >= data.base-ppmTol & rvals$expt.masses[i] <= data.base+ppmTol)
+        
+        if (length(marker[i]) > 0){
+          
+          #converts to useable vector
+          marker.vect[[i]] <- marker
+          
+        }
+        
+      }
+      
     } #loop to find markers (where in expt dataset match occurs)
     exp.match <- c() # empty vector for position of experimental matches to go
     for (j in 1:length(marker.vect)){
@@ -257,6 +282,13 @@ server <- function(input, output) {
     #add the percent in RT to the data
     results.for.download <- cbind(results.rt, percent.delta.rt)
     
+    #calculate ppm error here for downloads
+    ppmErrorDownloads <- ((results.for.download[,3] - results.for.download[,4])/results.for.download[,3])*10^6 
+    
+    #add ppmErrorDownloads to the results.for.download
+    #results.for.download <- cbind(results.for.download, ppmErrorDownloads)
+
+    
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z",
                                         "Experimental m/z", "RT", "Predicted RT", "Percent Match RT")
     
@@ -274,7 +306,7 @@ server <- function(input, output) {
                                   by.x = "Compound Name", by.y = "Name", all.x = TRUE)
     
     colnames(results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
-                                        "Experimental RT", "Predicted RT", "Percent Match RT", "mzrt", "Class")
+                                        "Experimental RT", "Predicted RT", "Percent Match RT","mzrt", "Class")
     
     #loop to take UI input and sort the output data in the UI
     if (input$orderby == 1){
@@ -314,6 +346,8 @@ server <- function(input, output) {
     download.results <- merge(x = results.for.download, y = comp.classes,
                               by.x = "Compound Name", by.y = "Name", all.x = TRUE)
     
+    ppmVectCalc <- ((download.results[,3] - download.results[,4])/download.results[,3])*10^6
+    
     #pseudo-SQL left join
     download.results <- merge(x = results.for.download, y = experimental.intensities,
                               by.x = "mzrt", by.y = "mzrt1", all.x = TRUE)
@@ -335,7 +369,7 @@ server <- function(input, output) {
                                     "RT", "Predicted RT", "Percent Match RT", "Class", sample.names)
     
     #rearranges to bring compound class in
-    download.results <- download.results[,c(1,2,9,3,4,5,6,7,8,10:ncol(download.results))]
+    download.results <- download.results[,c(1,2,9,3,4,5,6,7,8:ncol(download.results))]
     
     #drops mz_rt
     download.results <- download.results[,2:ncol(download.results)]
@@ -344,16 +378,27 @@ server <- function(input, output) {
     download.results <- data.frame(download.results)
     
     #assign the data for download to a global variable so it can be downloaded within the GUI envrionment by the user
+    download.results <- download.results[,-9]
+    #inserting the ppm error into the downloads
+    download.results <- cbind(download.results[, 1:(9 - 1)], ppmErrorDownloads, download.results[, 9:ncol(download.results)])
     rvals$download.noncustom <- download.results
     
     #reorders to bring class into the mix
     results.for.display <- results.for.display[, c(1, 9, 2, 3, 4, 5, 6, 7, 8)]
     
+    #compute ppm mass error (don't think people will want to sort by ppm?)
+    ppmError <- ((results.for.display[,4] - results.for.display[,5])/results.for.display[,4])*10^6
+    
+    results.for.display <- cbind(results.for.display, ppmError)
+    
+    colnames(results.for.display) <- c("Compound Name", "Class", "Adduct/BT", "Actual m/z", "Experimental m/z",
+                                       "RT", "Predicted RT", "Percent Match RT", "ppm", "ppm Mass Difference")
+    
     #displays the results we want in the GUI
-    results.for.display[,1:8]
+    results.for.display[,c(1:8,10)]
     
   },
-  digits = 4 #displays 4 decimal points
+  digits = 5 #displays 5 decimal points
   )
   
   output$downloadData <- downloadHandler(
@@ -400,11 +445,32 @@ server <- function(input, output) {
       
       for (i in 1:length(rvals$custom.expt.masses)){
         
+        if (input$tolMode2 == 1){
+        
         marker.custom <- which(rvals$custom.expt.masses[i] >= v3-input$tol2 & rvals$custom.expt.masses[i] <= v3+input$tol2)
         
-        if (length(marker.custom[i]) > 0){
+          if (length(marker.custom[i]) > 0){
+            
+            custom.marker.vect[[i]] <- marker.custom
+            
+          }
+        } else if (input$tolMode2 == 2){
           
-          custom.marker.vect[[i]] <- marker.custom
+          #vector for absolute ppm error to go in (will all be positive)
+          ppmAbsolute2 <- c()
+          ppmTol2 <- c()
+          
+          #calculate the error for each entry in the database
+          ppmAbsolute2 <- v3*(1+input$tol2/10^6) 
+          ppmTol2 <-  ppmAbsolute2 - v3
+          
+          marker.custom <- which(rvals$custom.expt.masses[i] >= v3-ppmTol2 & rvals$custom.expt.masses[i] <= v3+ppmTol2)
+          
+          if (length(marker.custom[i]) > 0){
+            
+            custom.marker.vect[[i]] <- marker.custom
+            
+          }
           
         }
       }
@@ -436,32 +502,12 @@ server <- function(input, output) {
       rvals$custom.results.appended <- custom.results
     }
     
-    # #adds single digit when run
-    # dfm[,2] <- dfm[,2] + 1
-    # 
-    # #saves as a variable that is read by the program
-    # rvals$timesUsed <- dfm[1,2]
-    # 
-    # #saves the column with new number
-    # counterDF <- dfm[,2]
-    # 
-    # #creating a blank matrix
-    # emptyMatrix <- c()
-    # 
-    # #overwriting matrix with blank one
-    # write.csv(emptyMatrix,
-    #           "counterCSV.csv")
-    # 
-    # #saves counter number to the server as a .csv
-    # write.csv(counterDF,
-    #           "counterCSV.csv")
-    
   })
   
   output$contents_shell <- renderTable({
     
     validate(
-      #eliminates the error message, so that the error message is much friendler
+      #eliminates the error message, so that the error message is much friendlier
       need(input$file2 != "", label = "A .csv file with m/z and RT values")
     )
     
@@ -489,13 +535,19 @@ server <- function(input, output) {
     #creats msrt for each hit
     custom.results.rt.delta.final.mzrt <- paste0(custom.results.rt.delta.final[,4], "_", custom.results.rt.delta.final[,5])
     
+    #calculate ppm error and add it to the output data for download.
+    ppmErrorVect <- ((custom.results.rt.delta.final[,3] - custom.results.rt.delta.final[,4])/custom.results.rt.delta.final[,3])*10^6
+    
+    #bind the ppmError vect to the other data
+    custom.results.for.download <- cbind(custom.results.rt.delta.final, ppmErrorVect)
+    
     #binds mz_rt to rest of results
-    custom.results.for.download <- cbind(custom.results.rt.delta.final, custom.results.rt.delta.final.mzrt)
+    custom.results.for.download <- cbind(custom.results.for.download, custom.results.rt.delta.final.mzrt)
     
     #column names
     colnames(custom.results.for.download) <- c("Compound Name", "Adduct/BT", "Actual m/z",
                                                "Experimental m/z", "RT", "Predicted RT",
-                                               "Percent Match RT", "mzrt")
+                                               "Percent Match RT","ppmError", "mzrt")
     
     #logic to order results output to GUI based on users input (order by)
     if (input$orderby_shell == 1){
@@ -543,11 +595,19 @@ server <- function(input, output) {
     #send to global envrio for download through GUI
     rvals$download.custom.appended <- custom.download.results
     
+    #compute ppm mass error (don't think people will want to sort by ppm?)
+    ppmError2 <- ((shell.results.sorted[,3] - shell.results.sorted[,4])/shell.results.sorted[,4])*10^6
+    
+    shell.results.sorted <- cbind(shell.results.sorted, ppmError2)
+    
+    colnames(shell.results.sorted) <- c("Compound Name", "Adduct/BT", "Actual m/z", "Experimental m/z",
+                                       "RT", "Predicted RT", "Percent Match RT", "ppm Mass Difference")
+    
     #output final results into GUI for user to see
-    shell.results.sorted[,1:7]
+    shell.results.sorted[,1:8]
     
   },
-  digits = 4 #always displays 4 decimal points
+  digits = 5 #always displays 4 decimal points
   )
   
   output$downloadData_shell <- downloadHandler(
