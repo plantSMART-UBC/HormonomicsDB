@@ -379,6 +379,7 @@ server <- function(input, output) {
     
     #assign the data for download to a global variable so it can be downloaded within the GUI envrionment by the user
     download.results <- download.results[,-9]
+    #inserting the ppm error into the downloads
     download.results <- cbind(download.results[, 1:(9 - 1)], ppmErrorDownloads, download.results[, 9:ncol(download.results)])
     rvals$download.noncustom <- download.results
     
