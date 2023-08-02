@@ -435,11 +435,32 @@ server <- function(input, output) {
       
       for (i in 1:length(rvals$custom.expt.masses)){
         
+        if (input$tolMode2 == 1){
+        
         marker.custom <- which(rvals$custom.expt.masses[i] >= v3-input$tol2 & rvals$custom.expt.masses[i] <= v3+input$tol2)
         
-        if (length(marker.custom[i]) > 0){
+          if (length(marker.custom[i]) > 0){
+            
+            custom.marker.vect[[i]] <- marker.custom
+            
+          }
+        } else if (input$tolMode2 == 2){
           
-          custom.marker.vect[[i]] <- marker.custom
+          #vector for absolute ppm error to go in (will all be positive)
+          ppmAbsolute2 <- c()
+          ppmTol2 <- c()
+          
+          #calculate the error for each entry in the database
+          ppmAbsolute2 <- v3*(1+input$tol2/10^6) 
+          ppmTol2 <-  ppmAbsolute2 - v3
+          
+          marker.custom <- which(rvals$custom.expt.masses[i] >= v3-ppmTol2 & rvals$custom.expt.masses[i] <= v3+ppmTol2)
+          
+          if (length(marker.custom[i]) > 0){
+            
+            custom.marker.vect[[i]] <- marker.custom
+            
+          }
           
         }
       }
@@ -496,7 +517,7 @@ server <- function(input, output) {
   output$contents_shell <- renderTable({
     
     validate(
-      #eliminates the error message, so that the error message is much friendler
+      #eliminates the error message, so that the error message is much friendlier
       need(input$file2 != "", label = "A .csv file with m/z and RT values")
     )
     

@@ -132,7 +132,7 @@ ui <- fluidPage(
                                         choices = list("+/- Da" = 1,
                                                        "+/- ppm" = 2),
                                         selected = 1),
-                           numericInput('tol2', "Mass tolerance (+/- Da or ppm)", 0.02, min = 0, max = 1000, step = 0.0001), #slider bar input
+                           numericInput('tol2', "Mass tolerance (+/- Da or ppm)", 0.02, min = 0, max = 10000, step = 0.0001), #slider bar input
                            fileInput('file2', 'Choose file to upload: ', #import csv button
                                      accept = c(
                                        'text/csv',
